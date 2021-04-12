@@ -3,10 +3,8 @@ package com.example.workout.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +12,6 @@ import android.view.View;
 import com.example.workout.Adapter.SportsNewsAdapter;
 import com.example.workout.Model.DefaultResponse;
 import com.example.workout.Model.News;
-import com.example.workout.Model.NewsResponse;
 import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.RetrofitClient;
 import com.example.workout.R;
@@ -66,7 +63,7 @@ public class SportsNewsActivity extends AppCompatActivity {
 //                })
 //        );
     }
-    private void pasangAdapter(){
+    private void pasangAdapter(List<News> newsList){
         recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
         adapter = new SportsNewsAdapter(newsList);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
@@ -75,8 +72,7 @@ public class SportsNewsActivity extends AppCompatActivity {
         recyclerNews.addOnItemTouchListener(
                 new RecyclerItemClickListener(SportsNewsActivity.this, recyclerNews ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
-//                        News selected_news = RecyclerView.ViewHolder.getPosition(position);
-                        News selected_news = new News("Tribun", "Duar HEadshot", "Rakha hamil", "google.com");
+                        News selected_news = newsList.get(position);
                         Intent i = new Intent(SportsNewsActivity.this, SportsNewsWebViewActivity.class);
                         i.putExtra("selected_news", selected_news);
                         startActivity(i);
@@ -106,7 +102,7 @@ public class SportsNewsActivity extends AppCompatActivity {
                     newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl()));
 //                    Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
                 }
-                pasangAdapter();
+                pasangAdapter(newsList);
 
             }
 
