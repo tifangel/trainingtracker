@@ -66,6 +66,28 @@ public class SportsNewsActivity extends AppCompatActivity {
 //                })
 //        );
     }
+    private void pasangAdapter(){
+        recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
+        adapter = new SportsNewsAdapter(newsList);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
+        recyclerNews.setLayoutManager(layoutManager);
+        recyclerNews.setAdapter(adapter);
+        recyclerNews.addOnItemTouchListener(
+                new RecyclerItemClickListener(SportsNewsActivity.this, recyclerNews ,new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+//                        News selected_news = RecyclerView.ViewHolder.getPosition(position);
+                        News selected_news = new News("Tribun", "Duar HEadshot", "Rakha hamil", "google.com");
+                        Intent i = new Intent(SportsNewsActivity.this, SportsNewsWebViewActivity.class);
+                        i.putExtra("selected_news", selected_news);
+                        startActivity(i);
+                    }
+
+                    @Override public void onLongItemClick(View view, int position) {
+                        // do whatever
+                    }
+                })
+        );
+    }
 
     private void addData(String country, String category, String API_key) {
         newsList = new ArrayList<>();
@@ -84,26 +106,8 @@ public class SportsNewsActivity extends AppCompatActivity {
                     newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl()));
 //                    Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
                 }
-                recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
-                adapter = new SportsNewsAdapter(newsList);
-                RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
-                recyclerNews.setLayoutManager(layoutManager);
-                recyclerNews.setAdapter(adapter);
-                recyclerNews.addOnItemTouchListener(
-                        new RecyclerItemClickListener(SportsNewsActivity.this, recyclerNews ,new RecyclerItemClickListener.OnItemClickListener() {
-                            @Override public void onItemClick(View view, int position) {
-//                        News selected_news = RecyclerView.ViewHolder.getPosition(position);
-                                News selected_news = new News("Tribun", "Duar HEadshot", "Rakha hamil", "google.com");
-                                Intent i = new Intent(SportsNewsActivity.this, SportsNewsWebViewActivity.class);
-                                i.putExtra("selected_news", selected_news);
-                                startActivity(i);
-                            }
+                pasangAdapter();
 
-                            @Override public void onLongItemClick(View view, int position) {
-                                // do whatever
-                            }
-                        })
-                );
             }
 
             @Override
