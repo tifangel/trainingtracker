@@ -7,12 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.workout.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LogDetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class LogDetailFragment extends Fragment {
 
     public LogDetailFragment() {

@@ -34,14 +34,6 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
         holder.txtNewsTitle.setText(title);
         holder.txtNewsAuthor.setText(author);
         holder.txtNewsDesc.setText(desc);
-//        String url = newsList.get(position).getLogo();
-
-//        holder.txtNamaRadio.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View v){
-//                int id = newsList.get(position).getId();
-//
-//            }
     }
 
     @Override
@@ -58,9 +50,5 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
             txtNewsAuthor = (TextView) itemView.findViewById(R.id.txt_news_author);
             txtNewsDesc = (TextView) itemView.findViewById(R.id.txt_news_desc);
         }
-    }
-
-    public interface OnNewsListener{
-        void onNewsClick(int position);
     }
 }

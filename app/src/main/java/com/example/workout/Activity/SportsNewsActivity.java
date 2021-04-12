@@ -42,27 +42,6 @@ public class SportsNewsActivity extends AppCompatActivity {
 //        bottomNavigationView
 
         addData(cID, cat, TOKEN);
-
-//        recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
-//        adapter = new SportsNewsAdapter(newsList);
-//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
-//        recyclerNews.setLayoutManager(layoutManager);
-//        recyclerNews.setAdapter(adapter);
-//        recyclerNews.addOnItemTouchListener(
-//                new RecyclerItemClickListener(SportsNewsActivity.this, recyclerNews ,new RecyclerItemClickListener.OnItemClickListener() {
-//                    @Override public void onItemClick(View view, int position) {
-////                        News selected_news = RecyclerView.ViewHolder.getPosition(position);
-//                        News selected_news = new News("Tribun", "Duar HEadshot", "Rakha hamil", "google.com");
-//                        Intent i = new Intent(SportsNewsActivity.this, SportsNewsWebViewActivity.class);
-//                        i.putExtra("selected_news", selected_news);
-//                        startActivity(i);
-//                    }
-//
-//                    @Override public void onLongItemClick(View view, int position) {
-//                        // do whatever
-//                    }
-//                })
-//        );
     }
     private void pasangAdapter(List<News> newsList){
         recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
@@ -102,7 +81,6 @@ public class SportsNewsActivity extends AppCompatActivity {
                 Log.d("Jumlah isi listnya", String.valueOf(newsList.size()));
                 for (int i = 0; i < listOfNews.size(); i++){
                     newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl()));
-//                    Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
                 }
                 pasangAdapter(newsList);
 
@@ -114,17 +92,7 @@ public class SportsNewsActivity extends AppCompatActivity {
             }
         });
         for (int i = 0; i < newsList.size(); i++){
-//            newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl()));
             Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
         }
-//        newsList.add(new News("Tribun1", "Sepakbola Jose Mourinho Puji Manchester United - detikSport", "Rakha hamil", "google.com"));
-//        newsList.add(new News("Tribun2", "Duar HEadshott", "Tifany ultah", "google.com"));
-//        newsList.add(new News("Tribun3", "Duar HEadshottt", "Tinky hamil", "google.com"));
-//        newsList.add(new News("Tribun4", "Duar HEadshotttt", "Winky hamil", "google.com"));
-//        newsList.add(new News("Tribun5", "Duar HEadshottttt", "Dipsi hamil", "google.com"));
-//        newsList.add(new News("Tribun6", "Duar HEadshottttttt", "Lala hamil", "google.com"));
-//        newsList.add(new News("Tribun7", "Duar HEadshotttttttt", "Po hamil", "google.com"));
-//        newsList.add(new News("Tribun8", "Duar HEadshottttttttt", "Duar hamil", "google.com"));
-//        newsList.add(new News("Tribun9", "Duar HEadshotttttttttt", "HIya hamil", "google.com"));
     }
 }
