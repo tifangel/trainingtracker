@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workout.Model.News;
+import com.example.workout.Model.NewsResponse;
 import com.example.workout.R;
 
 import java.util.List;
