@@ -20,40 +20,6 @@ public class News implements Parcelable {
         this.urlToImage = urlToImage;
     }
 
-    protected News(Parcel in) {
-        author = in.readString();
-        title = in.readString();
-        description = in.readString();
-        url = in.readString();
-        urlToImage = in.readString();
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(author);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(url);
-        dest.writeString(urlToImage);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        @Override
-        public News createFromParcel(Parcel in) {
-            return new News(in);
-        }
-
-        @Override
-        public News[] newArray(int size) {
-            return new News[size];
-        }
-    };
-
     public String getAuthor() {
         return author;
     }
@@ -93,4 +59,47 @@ public class News implements Parcelable {
     public void setUrlToImage(String urlToImage) {
         this.urlToImage = urlToImage;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.author);
+        dest.writeString(this.title);
+        dest.writeString(this.description);
+        dest.writeString(this.url);
+        dest.writeString(this.urlToImage);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.author = source.readString();
+        this.title = source.readString();
+        this.description = source.readString();
+        this.url = source.readString();
+        this.urlToImage = source.readString();
+    }
+
+    protected News(Parcel in) {
+        this.author = in.readString();
+        this.title = in.readString();
+        this.description = in.readString();
+        this.url = in.readString();
+        this.urlToImage = in.readString();
+    }
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel source) {
+            return new News(source);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 }

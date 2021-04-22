@@ -5,10 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.LogListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/selected_date"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="date_selected" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerHistory"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </FrameLayout>

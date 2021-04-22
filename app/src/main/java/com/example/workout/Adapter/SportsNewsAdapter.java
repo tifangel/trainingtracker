@@ -37,12 +37,11 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
         holder.txtNewsAuthor.setText(author);
         holder.txtNewsDesc.setText(desc);
         String url = newsList.get(position).getUrlToImage();
-        String urlTest = "https://images.daznservices.com/di/library/sporting_news/a4/8/sportingnews_blid1xj976d41uqjx0jd6x52p.png";
-
         Picasso.get()
                 .load(url)
                 .fit()
-                .into(holder.newsImg);
+                .into(holder.imgNews);
+
     }
 
     @Override
@@ -52,15 +51,14 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
 
     public class SportsNewsViewHolder extends RecyclerView.ViewHolder{
         private TextView txtNewsDesc, txtNewsTitle, txtNewsAuthor;
-        private ImageView newsImg;
+        private ImageView imgNews;
 
         public SportsNewsViewHolder(View itemView){
             super(itemView);
-
             txtNewsTitle = (TextView) itemView.findViewById(R.id.tv_title);
             txtNewsAuthor = (TextView) itemView.findViewById(R.id.tv_author);
             txtNewsDesc = (TextView) itemView.findViewById(R.id.tv_description);
-            newsImg = (ImageView) itemView.findViewById(R.id.iv_image);
+            imgNews = (ImageView) itemView.findViewById(R.id.iv_image);
         }
     }
 }

@@ -12,102 +12,18 @@
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="227dp"
         tools:layout_editor_absoluteY="199dp" />
-
-    <GridLayout
-        android:id="@+id/nav"
-        android:layout_width="match_parent"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-
-        android:layout_alignParentBottom="true"
-        android:columnCount="4"
-        android:elevation="8dp"
-
-        android:rowCount="2"
-        app:layout_constraintBottom_toBottomOf="@+id/recyclerNews">
-
-        <Button
-            android:id="@+id/news"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="0"
-            android:layout_columnWeight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Tutor"
-            android:drawableTint="@color/grey"
-            android:fontFamily="sans-serif"
-            android:padding="6dp"
-            android:text="Home"
-            android:textAllCaps="false"
-            android:textColor="@color/grey"
-            android:tint="@color/grey" />
-
-
-        <Button
-            android:id="@+id/tutor"
-            android:layout_height="match_parent"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="1"
-            android:layout_columnWeight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Tutor"
-            android:drawableTint="@color/colorAccent"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="4dp"
-            android:text="Tutor"
-            android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
-            android:tint="@color/colorAccent" />
-
-        <Button
-            android:id="@+id/konten"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="2"
-            android:layout_columnWeight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Konten"
-
-
-            android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:paddingBottom="4dp"
-            android:text="Konten"
-            android:textAllCaps="false"
-            android:textColor="@color/grey"
-            android:tint="@color/grey" />
-
-        <Button
-            android:id="@+id/profil"
-            android:layout_row="0"
-            android:layout_rowWeight="1"
-            android:layout_column="3"
-            android:layout_columnWeight="1"
-            android:background="?attr/selectableItemBackground"
-            android:contentDescription="Profil"
-            android:fontFamily="sans-serif"
-            android:padding="6dp"
-            android:text="Profil"
-            android:textAllCaps="false"
-            android:textColor="@color/grey"
-            android:tint="@color/grey" />
-
-
-    </GridLayout>
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/navigationView"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="0dp"-->
-<!--        android:layout_marginStart="0dp"-->
-<!--        android:background="?android:attr/windowBackground"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:itemBackground="@color/colorPrimary"-->
-<!--        app:itemIconTint="@color/white"-->
-<!--        app:itemTextColor="@color/white"-->
-<!--        app:menu="@menu/navigation"/>-->
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:menu="@menu/navigation"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
