@@ -3,12 +3,14 @@ package com.example.workout.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workout.Model.News;
 import com.example.workout.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -34,6 +36,13 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
         holder.txtNewsTitle.setText(title);
         holder.txtNewsAuthor.setText(author);
         holder.txtNewsDesc.setText(desc);
+        String url = newsList.get(position).getUrlToImage();
+        String urlTest = "https://images.daznservices.com/di/library/sporting_news/a4/8/sportingnews_blid1xj976d41uqjx0jd6x52p.png";
+
+        Picasso.get()
+                .load(url)
+                .fit()
+                .into(holder.newsImg);
     }
 
     @Override
@@ -43,12 +52,15 @@ public class SportsNewsAdapter extends RecyclerView.Adapter<SportsNewsAdapter.Sp
 
     public class SportsNewsViewHolder extends RecyclerView.ViewHolder{
         private TextView txtNewsDesc, txtNewsTitle, txtNewsAuthor;
+        private ImageView newsImg;
 
         public SportsNewsViewHolder(View itemView){
             super(itemView);
-            txtNewsTitle = (TextView) itemView.findViewById(R.id.txt_news_title);
-            txtNewsAuthor = (TextView) itemView.findViewById(R.id.txt_news_author);
-            txtNewsDesc = (TextView) itemView.findViewById(R.id.txt_news_desc);
+
+            txtNewsTitle = (TextView) itemView.findViewById(R.id.tv_title);
+            txtNewsAuthor = (TextView) itemView.findViewById(R.id.tv_author);
+            txtNewsDesc = (TextView) itemView.findViewById(R.id.tv_description);
+            newsImg = (ImageView) itemView.findViewById(R.id.iv_image);
         }
     }
 }

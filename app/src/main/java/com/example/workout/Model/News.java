@@ -10,13 +10,49 @@ public class News implements Parcelable {
     private String title;
     private String description;
     private String url;
+    private String urlToImage;
 
-    public News(String author, String title, String description, String url) {
+    public News(String author, String title, String description, String url, String urlToImage) {
         this.author = author;
         this.title = title;
         this.description = description;
         this.url = url;
+        this.urlToImage = urlToImage;
     }
+
+    protected News(Parcel in) {
+        author = in.readString();
+        title = in.readString();
+        description = in.readString();
+        url = in.readString();
+        urlToImage = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(author);
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(url);
+        dest.writeString(urlToImage);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<News> CREATOR = new Creator<News>() {
+        @Override
+        public News createFromParcel(Parcel in) {
+            return new News(in);
+        }
+
+        @Override
+        public News[] newArray(int size) {
+            return new News[size];
+        }
+    };
 
     public String getAuthor() {
         return author;
@@ -50,39 +86,11 @@ public class News implements Parcelable {
         this.url = url;
     }
 
-    public static Creator<News> getCREATOR() {
-        return CREATOR;
+    public String getUrlToImage() {
+        return urlToImage;
     }
 
-    protected News(Parcel in) {
-        author = in.readString();
-        title = in.readString();
-        description = in.readString();
-        url = in.readString();
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(author);
-        dest.writeString(title);
-        dest.writeString(description);
-        dest.writeString(url);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<News> CREATOR = new Creator<News>() {
-        @Override
-        public News createFromParcel(Parcel in) {
-            return new News(in);
-        }
-
-        @Override
-        public News[] newArray(int size) {
-            return new News[size];
-        }
-    };
 }

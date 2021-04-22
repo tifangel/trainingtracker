@@ -38,7 +38,7 @@ public class SportsNewsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_news);
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
+//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
 //        bottomNavigationView
 
         addData(cID, cat, TOKEN);
@@ -80,9 +80,13 @@ public class SportsNewsActivity extends AppCompatActivity {
                 List<News> listOfNews = response.body().getArticles();
                 Log.d("Jumlah isi listnya", String.valueOf(newsList.size()));
                 for (int i = 0; i < listOfNews.size(); i++){
-                    newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl()));
+                    newsList.add(new News(listOfNews.get(i).getAuthor(), listOfNews.get(i).getTitle(), listOfNews.get(i).getDescription(), listOfNews.get(i).getUrl(), listOfNews.get(i).getUrlToImage()));
                 }
                 pasangAdapter(newsList);
+                for (int i = 0; i < newsList.size(); i++){
+//                    Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
+                    Log.d("Gambar berita", "Link gambar berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getUrlToImage());
+                }
 
             }
 
@@ -91,8 +95,5 @@ public class SportsNewsActivity extends AppCompatActivity {
                 Log.d("Error ngambil berita", t.getMessage());
             }
         });
-        for (int i = 0; i < newsList.size(); i++){
-            Log.d("Judul berita", "Berita ke-" + String.valueOf(i) + ": " + newsList.get(i).getTitle());
-        }
     }
 }
