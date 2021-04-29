@@ -14,7 +14,7 @@
             android:id="@+id/tv_tanggalTerpilih"
             android:layout_width="134dp"
             android:layout_height="64dp"
-            android:layout_marginTop="72dp"
+            android:layout_marginTop="24dp"
             android:text="30/03/2000"
             android:textSize="25dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -24,8 +24,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerHistory"
-            android:layout_width="413dp"
-            android:layout_height="562dp"
+            android:layout_width="411dp"
+            android:layout_height="664dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"

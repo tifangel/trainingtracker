@@ -1,5 +1,6 @@
 package com.example.workout.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
+import com.example.workout.Activity.LogListActivity;
 import com.example.workout.R;
 
 import java.util.Calendar;
@@ -57,6 +59,10 @@ public class HistoryFragment extends Fragment {
 
                                 // set this date in TextView for Display
                                 date_view.setText(Date);
+
+                                Intent i = new Intent(getContext(), LogListActivity.class);
+                                i.putExtra("tanggalTerpilih", Date);
+                                startActivity(i);
 //                                Pindah Intent disini, tanggal ditaro diextra biar bisa dicari nantinya
                             }
                         });

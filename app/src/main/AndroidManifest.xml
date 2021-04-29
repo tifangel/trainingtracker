@@ -12,9 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Workout">
-        <activity android:name=".Activity.TrainingHistoryActivity"></activity>
+        <activity android:name=".Activity.LogListActivity"></activity>
+        <activity android:name=".Activity.LogDetailActivity" /> <!-- <activity android:name=".Activity.TrainingHistoryActivity"></activity> -->
+        <activity android:name=".Activity.SportsNewsActivity" />
         <activity android:name=".Activity.SportsNewsWebViewActivity" />
-        <activity android:name=".Activity.SportsNewsActivity">
+        <activity android:name=".Activity.TrainingHistoryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
