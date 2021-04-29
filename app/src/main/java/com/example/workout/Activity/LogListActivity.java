@@ -3,6 +3,7 @@ package com.example.workout.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.workout.Adapter.HistoryAdapter;
+import com.example.workout.Database.AppDatabase;
 import com.example.workout.Model.News;
 import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.WorkoutRecord;
@@ -37,6 +39,10 @@ public class LogListActivity extends AppCompatActivity {
         tanggal.setText(date);
 
         fetch_history_workout();
+
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "workout-record").build();
+
 
         rView = findViewById(R.id.recyclerHistory);
         adapter = new HistoryAdapter(historyList);

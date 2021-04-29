@@ -11,7 +11,7 @@ import java.util.Date;
 
 @Entity
 public class WorkoutRecord implements Parcelable {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int wid;
 
     @ColumnInfo(name = "jenis")

@@ -44,7 +44,7 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public void onClick(View v) {
                 new FetchURL(LogDetailActivity.this).execute(getUrl(point1.getPosition(), point2.getPosition(), "driving"), "driving");
-                getRoute.setVisibility(View.GONE);
+//                getRoute.setVisibility(View.GONE);
             }
         });
 
