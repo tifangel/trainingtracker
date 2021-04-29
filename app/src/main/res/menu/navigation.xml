@@ -3,17 +3,21 @@
 
     <Item
         android:id="@+id/sports_news"
+        android:icon="@drawable/ic_news"
         android:title="Sports News"/>
 
     <Item
         android:id="@+id/training_tracker"
+        android:icon="@drawable/ic_tracker"
         android:title="Training Tracker"/>
 
     <Item
         android:id="@+id/training_history"
+        android:icon="@drawable/ic_history"
         android:title="Training History"/>
     <Item
         android:id="@+id/training_scheduler"
+        android:icon="@drawable/ic_schedule"
         android:title="Training Scheduler"/>
 
 </menu>
