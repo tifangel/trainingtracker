@@ -198,7 +198,14 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             public void onChanged(Double aDouble) {
                 currentDistance = aDouble;
                 Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
-                textDistanceStep.setText(currentDistance + " m");
+                currentStep = (int) ((int) currentDistance/1609.34*2000);
+                Log.d("CURRENT STEP", currentStep + " step");
+                if(walkingRunning){
+                    textDistanceStep.setText(currentStep + " step");
+                }
+                if(cycling) {
+                    textDistanceStep.setText(currentDistance + " m");
+                }
             }
         });
     }
