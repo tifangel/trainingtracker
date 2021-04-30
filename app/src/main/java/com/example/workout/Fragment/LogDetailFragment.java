@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import com.example.workout.R;
 
 public class LogDetailFragment extends Fragment {
+    private final String API_KEY_MAPS = "AIzaSyB_tTKXQxwwYxPK_gyEweFF5DYOM7bCCos";
 
     public LogDetailFragment() {
         // Required empty public constructor
@@ -17,6 +18,7 @@ public class LogDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_log_detail, container, false);
         return v;
     }

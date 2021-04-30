@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.LogDetailActivity">
+
+
+    <fragment
+        android:id="@+id/supportMapFragment"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="416dp"
+        android:layout_height="426dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.366" />
+
+    <Button
+        android:id="@+id/btn_getRoute"
+        android:layout_width="207dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="84dp"
+        android:text="Press to get Route"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.967"
+        app:layout_constraintStart_toStartOf="@+id/supportMapFragment"
+        app:layout_constraintTop_toTopOf="@+id/tv_tanggalTerpilih"
+        app:layout_constraintVertical_bias="0.436" />
+
+    <TextView
+        android:id="@+id/tv_jarak_langkah"
+        android:layout_width="279dp"
+        android:layout_height="102dp"
+        android:gravity="center"
+        android:text="5.0km"
+        android:textSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/supportMapFragment"
+        app:layout_constraintVertical_bias="0.306" />
+
+    <TextView
+        android:id="@+id/tv_tanggalTerpilih"
+        android:layout_width="260dp"
+        android:layout_height="73dp"
+        android:gravity="center"
+        android:text="30-03-2000"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/mapView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.428" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

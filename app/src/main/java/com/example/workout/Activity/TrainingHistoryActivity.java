@@ -64,7 +64,7 @@ public class TrainingHistoryActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+//        bottomNav.setOnNavigationItemSelectedListener(navListener);
     }
 
     class HistoryPagerAdapter extends FragmentPagerAdapter {
