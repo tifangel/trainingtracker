@@ -10,13 +10,15 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="615dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="677dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="-2dp"
         android:background="?android:attr/windowBackground"

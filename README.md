@@ -41,5 +41,5 @@ Aplikasi ini dibuat untuk memenuhi keperluan tugas besar IF3210 Pengembangan Apl
     [Rehanadi](https://gitlab.informatika.org/rehanadi)
 - **Rakha Fadhilah** - *Bottom Navbar, Modul Training Scheduler, Service scheduler* -
     [RakhaFadhilah](https://gitlab.informatika.org/rakhafadhilah)
-- **Tifany Angelia** - *Service berita, Modul Training Tracker* -
+- **Tifany Angelia** - *Service Location, Modul Training Tracker* -
     [Tifangel](https://gitlab.informatika.org/tifangel)
