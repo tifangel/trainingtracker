@@ -18,7 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Workout">
 
-        <activity android:name=".Activity.TrainingSchedulerActivity"></activity>
+        <activity android:name=".Activity.TrainingSchedulerActivity">
+
+        </activity>
+        <activity android:name=".Activity.AddScheduleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activity.LogListActivity" />
         <activity android:name=".Activity.LogDetailActivity" />
         <activity android:name=".Activity.TrainingHistoryActivity"></activity>
@@ -31,11 +39,11 @@
         </activity>
         <activity android:name=".Activity.TrainingTrackerRedi"/>
         <activity android:name=".Activity.TrainingTrackerActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
 
         <meta-data

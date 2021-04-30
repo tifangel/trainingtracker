@@ -20,4 +20,9 @@
         android:icon="@drawable/ic_schedule"
         android:title="Training Scheduler"/>
 
+    <Item
+
+        />
+
+
 </menu>
