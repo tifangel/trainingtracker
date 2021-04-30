@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">workout</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="API_KEY">571be0fed4944a4090d63fd0c45da227</string>
+    <string name="Google_Maps_API_KEY">AIzaSyB_tTKXQxwwYxPK_gyEweFF5DYOM7bCCos</string>
     <string name="google_maps_key">map_key</string>
 </resources>
