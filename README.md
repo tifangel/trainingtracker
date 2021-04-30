@@ -37,9 +37,9 @@ Aplikasi ini dibuat untuk memenuhi keperluan tugas besar IF3210 Pengembangan Apl
 
 ## Pembagian Kerja
 
-- **Rehan Adi Satrya** - *Provided README Template* -
+- **Rehan Adi Satrya** - *Modul Berita, Modul Training History, Setting Database* -
     [Rehanadi](https://gitlab.informatika.org/rehanadi)
-- **Rakha Fadhilah** - *Provided README Template* -
+- **Rakha Fadhilah** - *Bottom Navbar, Modul Training Scheduler, Service scheduler* -
     [RakhaFadhilah](https://gitlab.informatika.org/rakhafadhilah)
-- **Tifany Angelia** - *Provided README Template* -
+- **Tifany Angelia** - *Service berita, Modul Training Tracker* -
     [Tifangel](https://gitlab.informatika.org/tifangel)
