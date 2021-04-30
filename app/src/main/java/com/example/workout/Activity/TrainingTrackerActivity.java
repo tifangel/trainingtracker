@@ -2,16 +2,9 @@ package com.example.workout.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -20,9 +13,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
-import androidx.room.DatabaseConfiguration;
-import androidx.room.InvalidationTracker;
-import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import android.util.Log;
 import android.view.View;
@@ -31,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.workout.Database.AppDatabase;
-import com.example.workout.Database.WorkoutRecordDao;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.example.workout.Services.TrackingService;
@@ -45,18 +34,12 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
+public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback{
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int POLYLINE_COLOR = Color.RED;
     private static final float POLYLINE_WIDTH = 8f;
     private static final float MAP_ZOOM = 15f;
-//    GoogleApiClient mGoogleApiClient;
-    private GoogleMap mMap;
-
-    private SensorManager sManager;
-    private Sensor stepSensor;
 
     private boolean walkingRunning;
     private boolean cycling;
@@ -64,6 +47,7 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private Boolean isTracking = false;
     private ArrayList<ArrayList<LatLng>> pathPoints = new ArrayList<ArrayList<LatLng>>();
 
+    private GoogleMap mMap;
     private double currentDistance = 0;
     private int currentStep = 0;
 
@@ -83,21 +67,11 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_training_tracker);
 
-//        checkLocationPermission();
-
-        sManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-
         btnStartService = findViewById(R.id.btn_start_stop);
         btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(cycling || walkingRunning){
-                    Log.d("IS TRACKING", isTracking.toString());
-                    if (walkingRunning) {
-                        Log.d("IS WALKING RUNNING", String.valueOf(walkingRunning));
-//                        stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-                    }
                     toggleRun();
                 }
             }
@@ -170,10 +144,8 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
 
     private void subscribeToObservers(){
         TrackingService.isTracking.observe(this, new Observer<Boolean>() {
-            @SuppressLint("LongLogTag")
             @Override
             public void onChanged(Boolean aBoolean) {
-                Log.d("IS TRACKING FROM OBSERVERS", aBoolean.toString());
                 updateTracking(aBoolean);
             }
         });
@@ -314,9 +286,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onResume();
         }
-        if(stepSensor != null) {
-            sManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_FASTEST);
-        }
     }
 
     @Override
@@ -341,9 +310,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onStop();
         }
-        if(stepSensor != null) {
-            sManager.unregisterListener(this, stepSensor);
-        }
     }
 
     @Override
@@ -360,27 +326,5 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onDestroy();
         }
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Sensor sensor = event.sensor;
-        float[] values = event.values;
-        int value = -1;
-
-        if (values.length > 0) {
-            value = (int) values[0];
-        }
-
-
-        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            currentStep++;
-            Log.d("CURRENT STEP", String.valueOf(currentStep));
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.d("SENSOR ACCURACY", sensor.getName() + " -> " + accuracy);
     }
 }
