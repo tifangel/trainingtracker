@@ -35,6 +35,22 @@ Aplikasi ini dibuat untuk memenuhi keperluan tugas besar IF3210 Pengembangan Apl
 
 ## Screenshots
 
+### Sports News
+![](image/1.png)
+![](image/2.png)
+
+### Tracking Tracker
+![](image/3.png)
+![](image/4.png)
+
+### Training History
+![](image/5.png)
+![](image/6.png)
+
+### Training Scheduler
+![](image/7.png)
+![](image/8.png)
+
 ## Pembagian Kerja
 
 - **Rehan Adi Satrya** - *Modul Berita, Modul Training History, Setting Database* -
