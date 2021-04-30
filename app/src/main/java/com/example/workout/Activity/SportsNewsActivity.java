@@ -39,32 +39,6 @@ public class SportsNewsActivity extends AppCompatActivity {
     private final String TOKEN = "571be0fed4944a4090d63fd0c45da227";
     private SportsNewsAdapter adapter;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                    switch (item.getItemId()){
-                        case R.id.sports_news:
-                            Intent intent_sport_news = new Intent(SportsNewsActivity.this, SportsNewsActivity.class);
-                            startActivity(intent_sport_news);
-                            return true;
-
-//                        case R.id.training_tracker:
-//                            selectedActivity = new ();
-//                            break;
-                        case R.id.training_history:
-                            Intent intent_training_history = new Intent(SportsNewsActivity.this, TrainingHistoryActivity.class);
-                            startActivity(intent_training_history);
-                            return true;
-//                        case R.id.training_scheduler:
-//                            selectedActivity = new SportsNewsActivity();
-//                            break;
-                    }
-                    return false;
-                }
-            };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +46,6 @@ public class SportsNewsActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-//        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
-//        bottomNavigationView
-
 
         addData(cID, cat, TOKEN);
     }
@@ -132,4 +103,31 @@ public class SportsNewsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            item -> {
+
+                switch (item.getItemId()){
+//                    case R.id.sports_news:
+//                        Intent intent_sport_news = new Intent(SportsNewsActivity.this, SportsNewsActivity.class);
+//                        startActivity(intent_sport_news);
+//                        return true;
+
+                    case R.id.training_tracker:
+                        Intent intent_training_tracker = new Intent(SportsNewsActivity.this, TrainingTrackerActivity.class);
+                        startActivity(intent_training_tracker);
+                        return true;
+//
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(SportsNewsActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(SportsNewsActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        return true;
+                }
+                return false;
+            };
 }
