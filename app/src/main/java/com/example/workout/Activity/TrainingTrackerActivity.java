@@ -20,6 +20,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
+import androidx.room.DatabaseConfiguration;
+import androidx.room.InvalidationTracker;
+import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import android.util.Log;
 import android.view.View;
@@ -27,6 +30,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.workout.Database.AppDatabase;
+import com.example.workout.Database.WorkoutRecordDao;
+import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.example.workout.Services.TrackingService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +44,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
@@ -142,10 +150,22 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             clInnerLayout.setVisibility(View.VISIBLE);
             mapView.setVisibility(View.VISIBLE);
             dateView.setVisibility(View.VISIBLE);
+            saveWorkRecordToDb();
         }else {
             checkLocationPermission();
             startService("ACTION_START_SERVICE");
         }
+    }
+
+    private void saveWorkRecordToDb(){
+        Date currdate = new Date();
+        WorkoutRecord workoutRecord = null;
+        if(cycling){
+            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, currdate.toString());
+        }else{
+            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString());
+        }
+        AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
     }
 
     private void subscribeToObservers(){

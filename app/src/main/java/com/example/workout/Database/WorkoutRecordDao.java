@@ -24,7 +24,7 @@ public interface WorkoutRecordDao {
     WorkoutRecord findByDate(String tanggal);
 
     @Insert
-    void insertAll(WorkoutRecord... workoutRecords);
+    void insertAllData(WorkoutRecord workoutRecord);
 
     @Delete
     void delete(WorkoutRecord user);

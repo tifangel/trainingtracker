@@ -26,8 +26,8 @@ public class WorkoutRecord implements Parcelable {
     @ColumnInfo(name = "tanggal")
     private String tanggal;
 
-    public WorkoutRecord(int wid, String jenis, Double jarakTempuh, int jumlahStep, String tanggal) {
-        this.wid = wid;
+    public WorkoutRecord(String jenis, Double jarakTempuh, int jumlahStep, String tanggal) {
+//        this.wid = wid;
         this.jenis = jenis;
         this.jarakTempuh = jarakTempuh;
         this.jumlahStep = jumlahStep;
