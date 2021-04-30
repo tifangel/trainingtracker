@@ -1,14 +1,20 @@
 package com.example.workout.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.example.workout.Adapter.SportsNewsAdapter;
 import com.example.workout.Model.DefaultResponse;
@@ -33,16 +39,46 @@ public class SportsNewsActivity extends AppCompatActivity {
     private final String TOKEN = "571be0fed4944a4090d63fd0c45da227";
     private SportsNewsAdapter adapter;
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.sports_news:
+                            Intent intent_sport_news = new Intent(SportsNewsActivity.this, SportsNewsActivity.class);
+                            startActivity(intent_sport_news);
+                            return true;
+
+//                        case R.id.training_tracker:
+//                            selectedActivity = new ();
+//                            break;
+                        case R.id.training_history:
+                            Intent intent_training_history = new Intent(SportsNewsActivity.this, TrainingHistoryActivity.class);
+                            startActivity(intent_training_history);
+                            return true;
+//                        case R.id.training_scheduler:
+//                            selectedActivity = new SportsNewsActivity();
+//                            break;
+                    }
+                    return false;
+                }
+            };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_news);
 
+        BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 //        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigationView);
 //        bottomNavigationView
 
+
         addData(cID, cat, TOKEN);
     }
+
     private void pasangAdapter(List<News> newsList){
         recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
         adapter = new SportsNewsAdapter(newsList);

@@ -1,8 +1,10 @@
 package com.example.workout.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,11 +31,13 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-//        String title = newsList.get(position).getTitle();
-//        String author = "Author: " + newsList.get(position).getAuthor();
-//        String desc = newsList.get(position).getDescription();
-//        holder.txtNewsTitle.setText(title);
-//        holder.txtNewsAuthor.setText(author);
+        WorkoutRecord workout = workoutRecordList.get(position);
+        String jenis = workout.getJenis();
+        Log.d("Jenis", jenis);
+        String desc = "Tanggal: " + workout.getTanggal() + "\n Jarak Tempuh: "+ workout.getJarakTempuh()+ "km";
+        Log.d("Desc" , desc);
+        holder.txtJenisWorkout.setText(jenis);
+        holder.txtWorkoutDesc.setText(desc);
 //        holder.txtNewsDesc.setText(desc);
     }
 
@@ -43,10 +47,14 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     }
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder{
+        private TextView txtWorkoutDesc, txtJenisWorkout;
+        private ImageView imgWorkout;
 
         public HistoryViewHolder(View itemView){
             super(itemView);
-
+            txtJenisWorkout = (TextView) itemView.findViewById(R.id.tv_desc_workout);
+            txtWorkoutDesc = (TextView) itemView.findViewById(R.id.jarakTempuh);
+            imgWorkout = (ImageView) itemView.findViewById(R.id.iv_workout);
         }
     }
 }
