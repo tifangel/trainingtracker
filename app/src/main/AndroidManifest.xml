@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <application
         android:allowBackup="true"
@@ -16,32 +17,39 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Workout">
-        <activity android:name=".Activity.TrainingSchedulerActivity"></activity>
-        <activity android:name=".Activity.TrainingTrackerActivity" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB_tTKXQxwwYxPK_gyEweFF5DYOM7bCCos" />
 
         <activity android:name=".Activity.TrainingSchedulerActivity"></activity>
         <activity android:name=".Activity.LogListActivity" />
         <activity android:name=".Activity.LogDetailActivity" />
-         <activity android:name=".Activity.TrainingHistoryActivity"></activity>
-<!--        <activity android:name=".Activity.SportsNewsActivity" />-->
+        <activity android:name=".Activity.TrainingHistoryActivity"></activity>
         <activity android:name=".Activity.SportsNewsWebViewActivity" />
-         <activity android:name=".Activity.SportsNewsActivity">
-             <intent-filter>
-                 <action android:name="android.intent.action.MAIN" />
-                 <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-         </activity>
-<!--        <activity android:name=".Activity.TrainingTrackerActivity">-->
+        <activity android:name=".Activity.SportsNewsActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
-
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
-<!--        </activity>-->
+        </activity>
+        <activity android:name=".Activity.TrainingTrackerRedi"/>
+        <activity android:name=".Activity.TrainingTrackerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/Google_Maps_API_KEY" />
+
+        <service android:name=".Services.TrackingService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="location" />
+
     </application>
 
 </manifest>

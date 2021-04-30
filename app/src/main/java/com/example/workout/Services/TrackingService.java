@@ -22,6 +22,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.LifecycleService;
 
+import com.example.workout.Activity.TrainingTrackerActivity;
 import com.example.workout.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -38,11 +39,16 @@ public class TrackingService extends LifecycleService {
     private long FASTEST_INTERVAL = 2000;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest mLocationRequest;
+    private Location firstLocation;
+    public static MutableLiveData<Double> currDistance = new MutableLiveData<Double>();
     public static MutableLiveData<Boolean> isTracking = new MutableLiveData<Boolean>();
     public static MutableLiveData<ArrayList<ArrayList<LatLng>>> pathPoints = new MutableLiveData<ArrayList<ArrayList<LatLng>>>();
 
+    private NotificationCompat.Builder baseNotificationBuilder;
+    private NotificationCompat.Builder curNotificationBuilder;
 
     private void postInitialValues(){
+        currDistance.postValue(0.0);
         isTracking.postValue(false);
         pathPoints.postValue(new ArrayList<ArrayList<LatLng>>());
     }
@@ -91,8 +97,14 @@ public class TrackingService extends LifecycleService {
                 if(locationResult != null){
                     if(locationResult.getLocations() != null){
                         for(Location location : locationResult.getLocations()){
+                            if(isFirstRun){
+                                firstLocation = location;
+                                isFirstRun = false;
+                            }else {
+                                currDistance.postValue((double) firstLocation.distanceTo(location));
+                            }
                             addPathPoint(location);
-                            Log.e("NEW_LOCATION", location.getLatitude() + " , " + location.getLongitude());
+//                            Log.d("NEW_LOCATION", location.getLatitude() + " , " + location.getLongitude());
                         }
                     }
                 }
@@ -111,22 +123,17 @@ public class TrackingService extends LifecycleService {
         }
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (intent.getStringExtra("ACTION_START_OR_RESUME_SERVICE") != null) {
-            String input = intent.getStringExtra("ACTION_START_OR_RESUME_SERVICE");
+        if (intent.getStringExtra("ACTION_START_SERVICE") != null) {
+            String input = intent.getStringExtra("ACTION_START_SERVICE");
 
-            if (isFirstRun) {
-                startForegroundService(input);
-                isFirstRun = false;
-            } else {
-//                startForegroundService(input);
-                addEmptyPolyline();
-            }
-        } else if (intent.getStringExtra("ACTION_PAUSE_SERVICE") != null) {
-            pauseService();
+            Log.d("ACTION INTENT FROM TRAINING TRACKER", input);
+            startForegroundService(input);
         } else if (intent.getStringExtra("ACTION_STOP_SERVICE") != null) {
+            stopService();
             Log.d("STOPPED : ", "Stopped services");
         }
 
@@ -166,12 +173,15 @@ public class TrackingService extends LifecycleService {
         startForeground(1, notification);
     }
 
-    private void pauseService(){
+    private void stopService(){
         isTracking.postValue(false);
+        stopForeground(true);
+        stopSelf();
+        Log.d("IS TRACKING SERVICE", isTracking.getValue().toString());
     }
 
     private PendingIntent getMainActivityPendingIntent(){
-        Intent notificationIntent = new Intent(this, TrackingService.class);
+        Intent notificationIntent = new Intent(this, TrainingTrackerActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 0, notificationIntent, 0);
         return pendingIntent;
