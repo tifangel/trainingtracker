@@ -38,7 +38,7 @@ public class LogListActivity extends AppCompatActivity {
         tanggal = findViewById(R.id.tv_tanggalTerpilih);
         tanggal.setText(date);
 
-        fetch_history_workout();
+        fetch_history_workout(date);
 
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "workout-record").build();
@@ -67,7 +67,7 @@ public class LogListActivity extends AppCompatActivity {
         );
     }
 
-    private void fetch_history_workout() {
+    private void fetch_history_workout(String tanggal) {
         historyList = new ArrayList<>();
         historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().getAll();
         historyList.add(new WorkoutRecord("Walking", 50.0, 3000, date));
@@ -75,5 +75,6 @@ public class LogListActivity extends AppCompatActivity {
         historyList.add(new WorkoutRecord("Cycling", 50.0, 3000, date));
         historyList.add(new WorkoutRecord("Berpacaran", 50.0, 3000, date));
         historyList.add(new WorkoutRecord("Bercumbu Rayu", 50.0, 3000, date));
+
     }
 }

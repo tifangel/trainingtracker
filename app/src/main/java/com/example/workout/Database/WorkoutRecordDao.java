@@ -21,7 +21,7 @@ public interface WorkoutRecordDao {
 //    WorkoutRecord findByName(String first, String last);
 
     @Query("SELECT * FROM workout WHERE tanggal = (:tanggal)")
-    WorkoutRecord findByDate(String tanggal);
+    List<WorkoutRecord> findByDate(String tanggal);
 
     @Insert
     void insertAllData(WorkoutRecord workoutRecord);
