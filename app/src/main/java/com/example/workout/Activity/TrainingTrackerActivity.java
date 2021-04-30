@@ -45,7 +45,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private static final float POLYLINE_WIDTH = 8f;
     private static final float MAP_ZOOM = 15f;
 //    GoogleApiClient mGoogleApiClient;
-    private Location lastLocation;
     private GoogleMap mMap;
 
     private SensorManager sManager;
@@ -57,7 +56,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private Boolean isTracking = false;
     private ArrayList<ArrayList<LatLng>> pathPoints = new ArrayList<ArrayList<LatLng>>();
 
-    private Location firstLocation;
     private double currentDistance = 0;
     private int currentStep = 0;
 
@@ -167,6 +165,15 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                 moveCameraToUser();
             }
         });
+        TrackingService.currDistance.observe(this, new Observer<Double>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onChanged(Double aDouble) {
+                currentDistance = aDouble;
+                Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
+                textDistanceStep.setText(currentDistance + " m");
+            }
+        });
     }
 
     private void addAllPolylines(){
@@ -187,20 +194,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(!pathPoints.isEmpty() && lastPolylines.size() > 1){
             LatLng preLastLatLng = lastPolylines.get(lastPolylines.size() - 2);
             LatLng lastLatLng = lastPolylines.get(lastPolylines.size()-1);
-            if(cycling){
-                if (firstLocation == null) {
-                    firstLocation = new Location(LocationManager.GPS_PROVIDER);
-                    firstLocation.setLatitude(preLastLatLng.latitude);
-                    firstLocation.setLongitude(preLastLatLng.longitude);
-                    Log.d("FIRST LATLNG LOCATION", firstLocation.getLatitude() + " , " + firstLocation.getLongitude());
-                }
-                lastLocation = new Location(LocationManager.GPS_PROVIDER);
-                lastLocation.setLatitude(lastLatLng.latitude);
-                lastLocation.setLongitude(lastLatLng.longitude);
-                currentDistance = firstLocation.distanceTo(lastLocation);
-                Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
-                textDistanceStep.setText(currentDistance + " m");
-            }
             PolylineOptions polylineOptions = new PolylineOptions()
                     .color(POLYLINE_COLOR)
                     .width(POLYLINE_WIDTH)

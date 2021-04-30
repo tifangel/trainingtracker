@@ -39,6 +39,8 @@ public class TrackingService extends LifecycleService {
     private long FASTEST_INTERVAL = 2000;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest mLocationRequest;
+    private Location firstLocation;
+    public static MutableLiveData<Double> currDistance = new MutableLiveData<Double>();
     public static MutableLiveData<Boolean> isTracking = new MutableLiveData<Boolean>();
     public static MutableLiveData<ArrayList<ArrayList<LatLng>>> pathPoints = new MutableLiveData<ArrayList<ArrayList<LatLng>>>();
 
@@ -46,6 +48,7 @@ public class TrackingService extends LifecycleService {
     private NotificationCompat.Builder curNotificationBuilder;
 
     private void postInitialValues(){
+        currDistance.postValue(0.0);
         isTracking.postValue(false);
         pathPoints.postValue(new ArrayList<ArrayList<LatLng>>());
     }
@@ -94,6 +97,12 @@ public class TrackingService extends LifecycleService {
                 if(locationResult != null){
                     if(locationResult.getLocations() != null){
                         for(Location location : locationResult.getLocations()){
+                            if(isFirstRun){
+                                firstLocation = location;
+                                isFirstRun = false;
+                            }else {
+                                currDistance.postValue((double) firstLocation.distanceTo(location));
+                            }
                             addPathPoint(location);
 //                            Log.d("NEW_LOCATION", location.getLatitude() + " , " + location.getLongitude());
                         }
