@@ -63,8 +63,6 @@ public class TrainingHistoryActivity extends AppCompatActivity {
 
         HistoryPagerAdapter pagerAdapter = new HistoryPagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new HistoryFragment());
-        pagerAdapter.addFragment(new LogListFragment());
-        pagerAdapter.addFragment(new LogDetailFragment());
         viewPager.setAdapter(pagerAdapter);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);

@@ -124,10 +124,10 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
                         overridePendingTransition(0, 0);
                         return true;
 //
-//                    case R.id.training_history:
-//                        Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
-//                        startActivity(intent_training_history);
-//                        return true;
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(LogDetailActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        return true;
 
                     case R.id.training_scheduler:
                         Intent intent_training_schedule = new Intent(LogDetailActivity.this, TrainingSchedulerActivity.class);
