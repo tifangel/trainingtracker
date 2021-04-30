@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
-@Entity
+@Entity(tableName="workout")
 public class WorkoutRecord implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int wid;

@@ -69,6 +69,7 @@ public class LogListActivity extends AppCompatActivity {
 
     private void fetch_history_workout() {
         historyList = new ArrayList<>();
+        historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().getAll();
         historyList.add(new WorkoutRecord(1, "Walking", 50.0, 3000, date));
         historyList.add(new WorkoutRecord(2, "Running", 50.0, 3000, date));
         historyList.add(new WorkoutRecord(3, "Cycling", 50.0, 3000, date));

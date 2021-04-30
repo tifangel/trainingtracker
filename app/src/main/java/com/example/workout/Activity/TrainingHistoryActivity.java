@@ -23,31 +23,31 @@ import java.util.ArrayList;
 
 public class TrainingHistoryActivity extends AppCompatActivity {
 
-//    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-//            new BottomNavigationView.OnNavigationItemSelectedListener() {
-//                @Override
-//                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//                    switch (item.getItemId()){
-//                        case R.id.sports_news:
-//                            Intent intent_sport_news = new Intent(TrainingHistoryActivity.this, SportsNewsActivity.class);
-//                            startActivity(intent_sport_news);
-//                            return true;
-//
-////                        case R.id.training_tracker:
-////                            selectedActivity = new ();
-////                            break;
-////                        case R.id.training_history:
-////                            Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
-////                            startActivity(intent_training_history);
-////                            return true;
-////                        case R.id.training_scheduler:
-////                            selectedActivity = new SportsNewsActivity();
-////                            break;
-//                    }
-//                    return false;
-//                }
-//            };
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    switch (item.getItemId()){
+                        case R.id.sports_news:
+                            Intent intent_sport_news = new Intent(TrainingHistoryActivity.this, SportsNewsActivity.class);
+                            startActivity(intent_sport_news);
+                            return true;
+
+//                        case R.id.training_tracker:
+//                            selectedActivity = new ();
+//                            break;
+                        case R.id.training_history:
+                            Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
+                            startActivity(intent_training_history);
+                            return true;
+//                        case R.id.training_scheduler:
+//                            selectedActivity = new SportsNewsActivity();
+//                            break;
+                    }
+                    return false;
+                }
+            };
 
 
     @Override
