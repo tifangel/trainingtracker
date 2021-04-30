@@ -82,8 +82,8 @@ public class SportsNewsActivity extends AppCompatActivity {
     private void pasangAdapter(List<News> newsList){
         recyclerNews = (RecyclerView) findViewById(R.id.recyclerNews);
         adapter = new SportsNewsAdapter(newsList);
-//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SportsNewsActivity.this);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
+//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SportsNewsActivity.this);
         recyclerNews.setLayoutManager(layoutManager);
         recyclerNews.setAdapter(adapter);
         recyclerNews.addOnItemTouchListener(
