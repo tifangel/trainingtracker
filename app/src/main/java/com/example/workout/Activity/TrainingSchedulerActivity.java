@@ -16,7 +16,10 @@ public class TrainingSchedulerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_training_scheduler);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.training_scheduler);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+        navListener.onNavigationItemSelected(bottomNav.getMenu().findItem(R.id.training_scheduler));
     }
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {

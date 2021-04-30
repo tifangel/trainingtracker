@@ -45,6 +45,7 @@ public class SportsNewsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sports_news);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.sports_news);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         addData(cID, cat, TOKEN);

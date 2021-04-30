@@ -24,6 +24,7 @@ public class SportsNewsWebViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sports_news_web_view);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.sports_news);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         selected_news = getIntent().getParcelableExtra("selected_news");

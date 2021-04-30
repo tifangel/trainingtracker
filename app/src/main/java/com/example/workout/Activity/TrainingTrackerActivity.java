@@ -117,6 +117,7 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
 //        checkLocationPermission();
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.training_tracker);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         sManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
