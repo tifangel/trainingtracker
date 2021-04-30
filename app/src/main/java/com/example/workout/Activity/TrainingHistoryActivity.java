@@ -37,10 +37,10 @@ public class TrainingHistoryActivity extends AppCompatActivity {
 //                        case R.id.training_tracker:
 //                            selectedActivity = new ();
 //                            break;
-//                        case R.id.training_history:
-//                            Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
-//                            startActivity(intent_training_history);
-//                            return true;
+                        case R.id.training_history:
+                            Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
+                            startActivity(intent_training_history);
+                            return true;
 //                        case R.id.training_scheduler:
 //                            selectedActivity = new SportsNewsActivity();
 //                            break;
