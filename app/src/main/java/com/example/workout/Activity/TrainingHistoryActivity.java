@@ -24,29 +24,33 @@ import java.util.ArrayList;
 public class TrainingHistoryActivity extends AppCompatActivity {
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            item -> {
 
-                    switch (item.getItemId()){
-                        case R.id.sports_news:
-                            Intent intent_sport_news = new Intent(TrainingHistoryActivity.this, SportsNewsActivity.class);
-                            startActivity(intent_sport_news);
-                            return true;
+                switch (item.getItemId()){
+                    case R.id.sports_news:
+                        Intent intent_sport_news = new Intent(TrainingHistoryActivity.this, SportsNewsActivity.class);
+                        startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
+                        return true;
 
-//                        case R.id.training_tracker:
-//                            selectedActivity = new ();
-//                            break;
-                        case R.id.training_history:
-                            Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
-                            startActivity(intent_training_history);
-                            return true;
-//                        case R.id.training_scheduler:
-//                            selectedActivity = new SportsNewsActivity();
-//                            break;
-                    }
-                    return false;
+                    case R.id.training_tracker:
+                        Intent intent_training_tracker = new Intent(TrainingHistoryActivity.this, TrainingTrackerActivity.class);
+                        startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
+                        return true;
+//
+//                    case R.id.training_history:
+//                        Intent intent_training_history = new Intent(TrainingHistoryActivity.this, TrainingHistoryActivity.class);
+//                        startActivity(intent_training_history);
+//                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(TrainingHistoryActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
+                        return true;
                 }
+                return false;
             };
 
 
@@ -59,12 +63,11 @@ public class TrainingHistoryActivity extends AppCompatActivity {
 
         HistoryPagerAdapter pagerAdapter = new HistoryPagerAdapter(getSupportFragmentManager());
         pagerAdapter.addFragment(new HistoryFragment());
-        pagerAdapter.addFragment(new LogListFragment());
-        pagerAdapter.addFragment(new LogDetailFragment());
         viewPager.setAdapter(pagerAdapter);
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
-//        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        bottomNav.setSelectedItemId(R.id.training_history);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
     }
 
     class HistoryPagerAdapter extends FragmentPagerAdapter {

@@ -17,6 +17,7 @@ import com.example.workout.Model.News;
 import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,10 @@ public class LogListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_list);
+
+        BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.training_history);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         date = getIntent().getStringExtra("tanggalTerpilih");
 
@@ -77,4 +82,34 @@ public class LogListActivity extends AppCompatActivity {
         historyList.add(new WorkoutRecord("Bercumbu Rayu", 50.0, 3000, date));
 
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            item -> {
+
+                switch (item.getItemId()){
+                    case R.id.sports_news:
+                        Intent intent_sport_news = new Intent(LogListActivity.this, SportsNewsActivity.class);
+                        startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.training_tracker:
+                        Intent intent_training_tracker = new Intent(LogListActivity.this, TrainingTrackerActivity.class);
+                        startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
+                        return true;
+//
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(LogListActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(LogListActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            };
 }
