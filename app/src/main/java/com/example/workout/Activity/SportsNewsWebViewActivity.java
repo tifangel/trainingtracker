@@ -53,21 +53,25 @@ public class SportsNewsWebViewActivity extends AppCompatActivity {
                     case R.id.sports_news:
                         Intent intent_sport_news = new Intent(SportsNewsWebViewActivity.this, SportsNewsActivity.class);
                         startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.training_tracker:
                         Intent intent_training_tracker = new Intent(SportsNewsWebViewActivity.this, TrainingTrackerActivity.class);
                         startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
                         return true;
 //
                     case R.id.training_history:
                         Intent intent_training_history = new Intent(SportsNewsWebViewActivity.this, TrainingHistoryActivity.class);
                         startActivity(intent_training_history);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.training_scheduler:
                         Intent intent_training_schedule = new Intent(SportsNewsWebViewActivity.this, TrainingSchedulerActivity.class);
                         startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;

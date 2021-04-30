@@ -30,11 +30,13 @@ public class TrainingHistoryActivity extends AppCompatActivity {
                     case R.id.sports_news:
                         Intent intent_sport_news = new Intent(TrainingHistoryActivity.this, SportsNewsActivity.class);
                         startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.training_tracker:
                         Intent intent_training_tracker = new Intent(TrainingHistoryActivity.this, TrainingTrackerActivity.class);
                         startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
                         return true;
 //
 //                    case R.id.training_history:
@@ -45,6 +47,7 @@ public class TrainingHistoryActivity extends AppCompatActivity {
                     case R.id.training_scheduler:
                         Intent intent_training_schedule = new Intent(TrainingHistoryActivity.this, TrainingSchedulerActivity.class);
                         startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;

@@ -116,16 +116,19 @@ public class SportsNewsActivity extends AppCompatActivity {
                     case R.id.training_tracker:
                         Intent intent_training_tracker = new Intent(SportsNewsActivity.this, TrainingTrackerActivity.class);
                         startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
                         return true;
 //
                     case R.id.training_history:
                         Intent intent_training_history = new Intent(SportsNewsActivity.this, TrainingHistoryActivity.class);
                         startActivity(intent_training_history);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.training_scheduler:
                         Intent intent_training_schedule = new Intent(SportsNewsActivity.this, TrainingSchedulerActivity.class);
                         startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;

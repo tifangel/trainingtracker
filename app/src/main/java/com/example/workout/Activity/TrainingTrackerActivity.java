@@ -86,6 +86,7 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                     case R.id.sports_news:
                         Intent intent_sport_news = new Intent(TrainingTrackerActivity.this, SportsNewsActivity.class);
                         startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
                         return true;
 
 //                    case R.id.training_tracker:
@@ -96,11 +97,13 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                     case R.id.training_history:
                         Intent intent_training_history = new Intent(TrainingTrackerActivity.this, TrainingHistoryActivity.class);
                         startActivity(intent_training_history);
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.training_scheduler:
                         Intent intent_training_schedule = new Intent(TrainingTrackerActivity.this, TrainingSchedulerActivity.class);
                         startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
                         return true;
                 }
                 return false;
