@@ -9,6 +9,10 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Looper;
@@ -32,20 +36,25 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
-public class TrackingService extends LifecycleService {
+public class TrackingService extends LifecycleService implements SensorEventListener {
 
     private boolean isFirstRun = true;
     private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */
     private long FASTEST_INTERVAL = 2000;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private LocationRequest mLocationRequest;
+    private Location firstLocation;
+    public static MutableLiveData<Double> currDistance = new MutableLiveData<Double>();
     public static MutableLiveData<Boolean> isTracking = new MutableLiveData<Boolean>();
     public static MutableLiveData<ArrayList<ArrayList<LatLng>>> pathPoints = new MutableLiveData<ArrayList<ArrayList<LatLng>>>();
 
-    private NotificationCompat.Builder baseNotificationBuilder;
-    private NotificationCompat.Builder curNotificationBuilder;
+    private SensorManager sManager;
+    private Sensor stepSensor;
+    private boolean isSensorPresent = false;
+    private static MutableLiveData<Integer> currStep = new MutableLiveData<Integer>();
 
     private void postInitialValues(){
+        currDistance.postValue(0.0);
         isTracking.postValue(false);
         pathPoints.postValue(new ArrayList<ArrayList<LatLng>>());
     }
@@ -56,6 +65,16 @@ public class TrackingService extends LifecycleService {
 
         postInitialValues();
         fusedLocationProviderClient = new FusedLocationProviderClient(this);
+
+        sManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        if(sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR) != null) {
+            stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+//            sManager.registerListener(stepSensor,sManager.SENSOR_DELAY_NORMAL);
+            isSensorPresent = true;
+        }
+        else {
+            isSensorPresent = false;
+        }
 
         isTracking.observe(this, new Observer<Boolean>() {
             @Override
@@ -94,6 +113,13 @@ public class TrackingService extends LifecycleService {
                 if(locationResult != null){
                     if(locationResult.getLocations() != null){
                         for(Location location : locationResult.getLocations()){
+                            if(isFirstRun){
+                                firstLocation = location;
+                                isFirstRun = false;
+                            }else {
+                                currDistance.postValue((double) firstLocation.distanceTo(location));
+                                updateNotification();
+                            }
                             addPathPoint(location);
 //                            Log.d("NEW_LOCATION", location.getLatitude() + " , " + location.getLongitude());
                         }
@@ -143,11 +169,7 @@ public class TrackingService extends LifecycleService {
         }
     }
 
-    private void startForegroundService(String input){
-
-        addEmptyPolyline();
-        isTracking.postValue(true);
-
+    private void updateNotification(){
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -156,7 +178,7 @@ public class TrackingService extends LifecycleService {
 
         Notification notification = new NotificationCompat.Builder(this, "ChannelId1")
                 .setContentTitle("Training Tracker")
-                .setContentText(input)
+                .setContentText(currDistance.getValue() + " km")
                 .setSmallIcon(R.drawable.ic_action_running)
                 .setContentIntent(getMainActivityPendingIntent())
                 .build();
@@ -164,11 +186,18 @@ public class TrackingService extends LifecycleService {
         startForeground(1, notification);
     }
 
+    private void startForegroundService(String input){
+
+        addEmptyPolyline();
+        isTracking.postValue(true);
+
+        updateNotification();
+    }
+
     private void stopService(){
         isTracking.postValue(false);
         stopForeground(true);
         stopSelf();
-        Log.d("IS TRACKING SERVICE", isTracking.getValue().toString());
     }
 
     private PendingIntent getMainActivityPendingIntent(){
@@ -190,5 +219,27 @@ public class TrackingService extends LifecycleService {
         stopForeground(true);
         stopSelf();
         super.onDestroy();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        Sensor sensor = event.sensor;
+        float[] values = event.values;
+        int value = -1;
+
+        if (values.length > 0) {
+            value = (int) values[0];
+        }
+
+
+        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
+            currStep.postValue(value);
+            Log.d("CURRENT STEP", String.valueOf(currStep.getValue()));
+        }
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        Log.d("SENSOR ACCURACY", sensor.getName() + " -> " + accuracy);
     }
 }

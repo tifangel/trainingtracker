@@ -2,6 +2,7 @@ package com.example.workout.Activity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -59,10 +60,18 @@ public class AddScheduleActivity extends AppCompatActivity {
         finishTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFinishTimeDialog();
+                Intent intent = new Intent(AddScheduleActivity.this, TrainingSchedulerActivity.class);
+                startActivity(intent);
             }
         });
 
+        Button submit = findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFinishTimeDialog();
+            }
+        });
     }
 
     private void showDateDialog(){

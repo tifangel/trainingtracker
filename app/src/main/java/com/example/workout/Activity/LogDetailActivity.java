@@ -1,5 +1,6 @@
 package com.example.workout.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCallback, TaskLoadedCallback {
     WorkoutRecord selected_workout;
@@ -36,6 +38,10 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_detail);
+
+        BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.training_history);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         selected_workout = getIntent().getParcelableExtra("selected_workout");
 
@@ -101,4 +107,34 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
             currentPolyline.remove();
         currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            item -> {
+
+                switch (item.getItemId()){
+                    case R.id.sports_news:
+                        Intent intent_sport_news = new Intent(LogDetailActivity.this, SportsNewsActivity.class);
+                        startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.training_tracker:
+                        Intent intent_training_tracker = new Intent(LogDetailActivity.this, TrainingTrackerActivity.class);
+                        startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
+                        return true;
+//
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(LogDetailActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(LogDetailActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            };
 }

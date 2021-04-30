@@ -2,16 +2,9 @@ package com.example.workout.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,6 +20,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.workout.Database.AppDatabase;
+import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.example.workout.Services.TrackingService;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -35,21 +30,17 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback, SensorEventListener {
+public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback{
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     private static final int POLYLINE_COLOR = Color.RED;
     private static final float POLYLINE_WIDTH = 8f;
     private static final float MAP_ZOOM = 15f;
-//    GoogleApiClient mGoogleApiClient;
-    private Location lastLocation;
-    private GoogleMap mMap;
-
-    private SensorManager sManager;
-    private Sensor stepSensor;
 
     private boolean walkingRunning;
     private boolean cycling;
@@ -57,7 +48,7 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private Boolean isTracking = false;
     private ArrayList<ArrayList<LatLng>> pathPoints = new ArrayList<ArrayList<LatLng>>();
 
-    private Location firstLocation;
+    private GoogleMap mMap;
     private double currentDistance = 0;
     private int currentStep = 0;
 
@@ -72,26 +63,50 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         // Required empty public constructor
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            item -> {
+
+                switch (item.getItemId()){
+                    case R.id.sports_news:
+                        Intent intent_sport_news = new Intent(TrainingTrackerActivity.this, SportsNewsActivity.class);
+                        startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+//                    case R.id.training_tracker:
+//                        Intent intent_training_tracker = new Intent(TrainingTrackerActivity.this, TrainingTrackerActivity.class);
+//                        startActivity(intent_training_tracker);
+//                        return true;
+////
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(TrainingTrackerActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(TrainingTrackerActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_training_tracker);
 
-//        checkLocationPermission();
-
-        sManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.training_tracker);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         btnStartService = findViewById(R.id.btn_start_stop);
         btnStartService.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(cycling || walkingRunning){
-                    Log.d("IS TRACKING", isTracking.toString());
-                    if (walkingRunning) {
-                        Log.d("IS WALKING RUNNING", String.valueOf(walkingRunning));
-//                        stepSensor = sManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
-                    }
                     toggleRun();
                 }
             }
@@ -144,18 +159,28 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             clInnerLayout.setVisibility(View.VISIBLE);
             mapView.setVisibility(View.VISIBLE);
             dateView.setVisibility(View.VISIBLE);
+            saveWorkRecordToDb();
         }else {
             checkLocationPermission();
             startService("ACTION_START_SERVICE");
         }
     }
 
+    private void saveWorkRecordToDb(){
+        Date currdate = new Date();
+        WorkoutRecord workoutRecord = null;
+        if(cycling){
+            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, currdate.toString());
+        }else{
+            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString());
+        }
+        AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
+    }
+
     private void subscribeToObservers(){
         TrackingService.isTracking.observe(this, new Observer<Boolean>() {
-            @SuppressLint("LongLogTag")
             @Override
             public void onChanged(Boolean aBoolean) {
-                Log.d("IS TRACKING FROM OBSERVERS", aBoolean.toString());
                 updateTracking(aBoolean);
             }
         });
@@ -165,6 +190,15 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                 pathPoints = arrayLists;
                 addLatestPolyline();
                 moveCameraToUser();
+            }
+        });
+        TrackingService.currDistance.observe(this, new Observer<Double>() {
+            @SuppressLint("LongLogTag")
+            @Override
+            public void onChanged(Double aDouble) {
+                currentDistance = aDouble;
+                Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
+                textDistanceStep.setText(currentDistance + " m");
             }
         });
     }
@@ -187,20 +221,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(!pathPoints.isEmpty() && lastPolylines.size() > 1){
             LatLng preLastLatLng = lastPolylines.get(lastPolylines.size() - 2);
             LatLng lastLatLng = lastPolylines.get(lastPolylines.size()-1);
-            if(cycling){
-                if (firstLocation == null) {
-                    firstLocation = new Location(LocationManager.GPS_PROVIDER);
-                    firstLocation.setLatitude(preLastLatLng.latitude);
-                    firstLocation.setLongitude(preLastLatLng.longitude);
-                    Log.d("FIRST LATLNG LOCATION", firstLocation.getLatitude() + " , " + firstLocation.getLongitude());
-                }
-                lastLocation = new Location(LocationManager.GPS_PROVIDER);
-                lastLocation.setLatitude(lastLatLng.latitude);
-                lastLocation.setLongitude(lastLatLng.longitude);
-                currentDistance = firstLocation.distanceTo(lastLocation);
-                Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
-                textDistanceStep.setText(currentDistance + " m");
-            }
             PolylineOptions polylineOptions = new PolylineOptions()
                     .color(POLYLINE_COLOR)
                     .width(POLYLINE_WIDTH)
@@ -301,9 +321,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onResume();
         }
-        if(stepSensor != null) {
-            sManager.registerListener(this, stepSensor, SensorManager.SENSOR_DELAY_FASTEST);
-        }
     }
 
     @Override
@@ -328,9 +345,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onStop();
         }
-        if(stepSensor != null) {
-            sManager.unregisterListener(this, stepSensor);
-        }
     }
 
     @Override
@@ -347,27 +361,5 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         if(mapView != null){
             mapView.onDestroy();
         }
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        Sensor sensor = event.sensor;
-        float[] values = event.values;
-        int value = -1;
-
-        if (values.length > 0) {
-            value = (int) values[0];
-        }
-
-
-        if (sensor.getType() == Sensor.TYPE_STEP_DETECTOR) {
-            currentStep++;
-            Log.d("CURRENT STEP", String.valueOf(currentStep));
-        }
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.d("SENSOR ACCURACY", sensor.getName() + " -> " + accuracy);
     }
 }

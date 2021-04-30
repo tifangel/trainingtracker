@@ -76,10 +76,10 @@ public class LogListFragment extends Fragment {
 
     private void fetch_history_workout() {
         historyList = new ArrayList<>();
-        historyList.add(new WorkoutRecord(1, "Bersepeda", 50.0, 3000, "27/03/2000"));
-        historyList.add(new WorkoutRecord(2, "running", 50.0, 3000, "27/03/2000"));
-        historyList.add(new WorkoutRecord(3, "cycling", 50.0, 3000, "27/03/2000"));
-        historyList.add(new WorkoutRecord(4, "Berpacaran", 50.0, 3000, "27/03/2000"));
-        historyList.add(new WorkoutRecord(5, "Bercumbu Rayu", 50.0, 3000, "27/03/2000"));
+        historyList.add(new WorkoutRecord("Bersepeda", 50.0, 3000, "27/03/2000"));
+        historyList.add(new WorkoutRecord("running", 50.0, 3000, "27/03/2000"));
+        historyList.add(new WorkoutRecord("cycling", 50.0, 3000, "27/03/2000"));
+        historyList.add(new WorkoutRecord("Berpacaran", 50.0, 3000, "27/03/2000"));
+        historyList.add(new WorkoutRecord("Bercumbu Rayu", 50.0, 3000, "27/03/2000"));
     }
 }

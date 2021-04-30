@@ -2,6 +2,7 @@ package com.example.workout.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.webkit.WebViewClient;
 
 import com.example.workout.Model.News;
 import com.example.workout.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class SportsNewsWebViewActivity extends AppCompatActivity {
     private WebView webView;
@@ -20,6 +22,10 @@ public class SportsNewsWebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_news_web_view);
+
+        BottomNavigationView bottomNav = findViewById(R.id.navigationView);
+        bottomNav.setSelectedItemId(R.id.sports_news);
+        bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         selected_news = getIntent().getParcelableExtra("selected_news");
         Log.d("Keberadaan Berita", "Berita termuat: " + selected_news.getTitle());
@@ -40,4 +46,35 @@ public class SportsNewsWebViewActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl(url);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            item -> {
+
+                switch (item.getItemId()){
+                    case R.id.sports_news:
+                        Intent intent_sport_news = new Intent(SportsNewsWebViewActivity.this, SportsNewsActivity.class);
+                        startActivity(intent_sport_news);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.training_tracker:
+                        Intent intent_training_tracker = new Intent(SportsNewsWebViewActivity.this, TrainingTrackerActivity.class);
+                        startActivity(intent_training_tracker);
+                        overridePendingTransition(0, 0);
+                        return true;
+//
+                    case R.id.training_history:
+                        Intent intent_training_history = new Intent(SportsNewsWebViewActivity.this, TrainingHistoryActivity.class);
+                        startActivity(intent_training_history);
+                        overridePendingTransition(0, 0);
+                        return true;
+
+                    case R.id.training_scheduler:
+                        Intent intent_training_schedule = new Intent(SportsNewsWebViewActivity.this, TrainingSchedulerActivity.class);
+                        startActivity(intent_training_schedule);
+                        overridePendingTransition(0, 0);
+                        return true;
+                }
+                return false;
+            };
 }
