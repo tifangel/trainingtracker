@@ -42,8 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.TrainingTrackerRedi"
-            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"/>
         <activity android:name=".Activity.TrainingTrackerActivity"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden">
 <!--            <intent-filter>-->

@@ -4,26 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.TrainingTrackerRedi">
+    tools:context=".Activity.TrainingTrackerActivity">
 
-    <Button
-        android:id="@+id/btn_start_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/startLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.169">
+
+            <Button
+                android:id="@+id/btnCycling"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cycling"
+                tools:layout_editor_absoluteX="205dp"
+                tools:layout_editor_absoluteY="170dp" />
+
+            <Button
+                android:id="@+id/btnWalkingRunning"
+                style="?attr/materialButtonOutlinedStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Walking/Running"
+                tools:layout_editor_absoluteX="99dp"
+                tools:layout_editor_absoluteY="171dp" />
+
+        </com.google.android.material.button.MaterialButtonToggleGroup>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_start_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toggleButton" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clInnerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/md_blue_800"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapView">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/distanceStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0 km"
+            android:textSize="50sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/dateView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/clInnerLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/tv_posisi"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Posisi: Ciledug"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/clInnerLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start_stop" />
+        app:layout_constraintTop_toBottomOf="@id/dateView" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-2dp"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/navigation" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

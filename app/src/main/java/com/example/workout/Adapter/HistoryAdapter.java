@@ -38,7 +38,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         Log.d("Desc" , desc);
         holder.txtJenisWorkout.setText(jenis);
         holder.txtWorkoutDesc.setText(desc);
-//        holder.txtNewsDesc.setText(desc);
     }
 
     @Override

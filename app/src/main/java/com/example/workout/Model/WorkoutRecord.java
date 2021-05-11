@@ -6,7 +6,15 @@ import android.os.Parcelable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity(tableName="workout")
@@ -26,12 +34,17 @@ public class WorkoutRecord implements Parcelable {
     @ColumnInfo(name = "tanggal")
     private String tanggal;
 
-    public WorkoutRecord(String jenis, Double jarakTempuh, int jumlahStep, String tanggal) {
+    @TypeConverters(PathPointsConverter.class)
+    @ColumnInfo(name = "polylines")
+    private ArrayList<ArrayList<LatLng>> pathPoints;
+
+    public WorkoutRecord(String jenis, Double jarakTempuh, int jumlahStep, String tanggal, ArrayList<ArrayList<LatLng>> pathPoints) {
 //        this.wid = wid;
         this.jenis = jenis;
         this.jarakTempuh = jarakTempuh;
         this.jumlahStep = jumlahStep;
         this.tanggal = tanggal;
+        this.pathPoints = pathPoints;
     }
 
     protected WorkoutRecord(Parcel in) {
@@ -96,6 +109,14 @@ public class WorkoutRecord implements Parcelable {
 
     public void setTanggal(String tanggal) {
         this.tanggal = tanggal;
+    }
+
+    public ArrayList<ArrayList<LatLng>> getPathPoints() {
+        return pathPoints;
+    }
+
+    public void setPathPoints(ArrayList<ArrayList<LatLng>> pathPoints) {
+        this.pathPoints = pathPoints;
     }
 
     @Override

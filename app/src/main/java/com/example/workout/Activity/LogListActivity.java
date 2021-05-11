@@ -52,7 +52,6 @@ public class LogListActivity extends AppCompatActivity {
         rView = findViewById(R.id.recyclerHistory);
         adapter = new HistoryAdapter(historyList);
         Log.d("Jumlah isi list", String.valueOf(historyList.size()));
-//        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SportsNewsActivity.this, 3);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(LogListActivity.this);
         rView.setLayoutManager(layoutManager);
         rView.setAdapter(adapter);
@@ -75,12 +74,6 @@ public class LogListActivity extends AppCompatActivity {
     private void fetch_history_workout(String tanggal) {
         historyList = new ArrayList<>();
         historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().getAll();
-        historyList.add(new WorkoutRecord("Walking", 50.0, 3000, date));
-        historyList.add(new WorkoutRecord("Running", 50.0, 3000, date));
-        historyList.add(new WorkoutRecord("Cycling", 50.0, 3000, date));
-        historyList.add(new WorkoutRecord("Berpacaran", 50.0, 3000, date));
-        historyList.add(new WorkoutRecord("Bercumbu Rayu", 50.0, 3000, date));
-
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -98,7 +91,7 @@ public class LogListActivity extends AppCompatActivity {
                         startActivity(intent_training_tracker);
                         overridePendingTransition(0, 0);
                         return true;
-//
+
                     case R.id.training_history:
                         Intent intent_training_history = new Intent(LogListActivity.this, TrainingHistoryActivity.class);
                         startActivity(intent_training_history);

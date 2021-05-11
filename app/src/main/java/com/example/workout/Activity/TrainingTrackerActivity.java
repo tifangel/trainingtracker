@@ -96,7 +96,9 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_training_tracker);
+        setContentView(R.layout.activity_training_tracker);
+
+        checkLocationPermission();
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
         bottomNav.setSelectedItemId(R.id.training_tracker);
@@ -161,7 +163,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             dateView.setVisibility(View.VISIBLE);
             saveWorkRecordToDb();
         }else {
-            checkLocationPermission();
             startService("ACTION_START_SERVICE");
         }
     }
@@ -170,9 +171,9 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         Date currdate = new Date();
         WorkoutRecord workoutRecord = null;
         if(cycling){
-            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, currdate.toString());
+            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, currdate.toString(), pathPoints);
         }else{
-            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString());
+            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString(), pathPoints);
         }
         AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
     }

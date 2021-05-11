@@ -34,39 +34,33 @@ public class HistoryFragment extends Fragment {
         kalender = (CalendarView) v.findViewById(R.id.kalender);
         date_view = (TextView) v.findViewById(R.id.date_view);
         // Add Listener in calendar
-        kalender.setOnDateChangeListener(
-                        new CalendarView
-                                .OnDateChangeListener() {
-                            @Override
+        kalender.setOnDateChangeListener( new CalendarView.OnDateChangeListener() {
+            @Override
+            // In this Listener have one method
+            // and in this method we will
+            // get the value of DAYS, MONTH, YEARS
+            public void onSelectedDayChange(
+                    @NonNull CalendarView view,
+                    int year,
+                    int month,
+                    int dayOfMonth)
+            {
 
-                            // In this Listener have one method
-                            // and in this method we will
-                            // get the value of DAYS, MONTH, YEARS
-                            public void onSelectedDayChange(
-                                    @NonNull CalendarView view,
-                                    int year,
-                                    int month,
-                                    int dayOfMonth)
-                            {
+                // Store the value of date with
+                // format in String type Variable
+                // Add 1 in month because month
+                // index is start with 0
+                String Date = dayOfMonth + "-" + (month + 1) + "-" + year;
 
-                                // Store the value of date with
-                                // format in String type Variable
-                                // Add 1 in month because month
-                                // index is start with 0
-                                String Date
-                                        = dayOfMonth + "-"
-                                        + (month + 1) + "-" + year;
+                // set this date in TextView for Display
+                date_view.setText(Date);
 
-                                // set this date in TextView for Display
-                                date_view.setText(Date);
+                Intent i = new Intent(getContext(), LogListActivity.class);
+                i.putExtra("tanggalTerpilih", Date);
+                startActivity(i);
+            }
 
-                                Intent i = new Intent(getContext(), LogListActivity.class);
-                                i.putExtra("tanggalTerpilih", Date);
-                                startActivity(i);
-//                                Pindah Intent disini, tanggal ditaro diextra biar bisa dicari nantinya
-                            }
-                        });
-
+        });
         return v;
     }
 }

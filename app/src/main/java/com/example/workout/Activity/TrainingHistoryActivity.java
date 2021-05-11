@@ -1,6 +1,5 @@
 package com.example.workout.Activity;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -9,13 +8,8 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.CalendarView;
-import android.widget.TextView;
 
 import com.example.workout.Fragment.HistoryFragment;
-import com.example.workout.Fragment.LogDetailFragment;
-import com.example.workout.Fragment.LogListFragment;
 import com.example.workout.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
