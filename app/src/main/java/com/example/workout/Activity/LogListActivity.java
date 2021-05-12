@@ -6,7 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +21,7 @@ import com.example.workout.Database.AppDatabase;
 import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
+import com.example.workout.Services.ReminderBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 

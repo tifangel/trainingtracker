@@ -66,6 +66,10 @@
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="location" />
+        
+        <receiver android:name=".Services.ReminderBroadcast"
+            android:enabled="true"
+            android:exported="true"/>
 
     </application>
 
