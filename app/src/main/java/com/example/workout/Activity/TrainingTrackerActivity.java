@@ -4,12 +4,10 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
@@ -17,19 +15,13 @@ import androidx.lifecycle.Observer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.workout.Database.AppDatabase;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.example.workout.Services.TrackingService;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.gson.Gson;
@@ -50,11 +42,6 @@ public class TrainingTrackerActivity extends AppCompatActivity {
     private int currentStep = 0;
 
     private Button btnStartService;
-    private ConstraintLayout startLayout;
-    private ConstraintLayout clInnerLayout;
-    private TextView dateView;
-    private MapView mapView;
-    private TextView textDistanceStep;
 
     public TrainingTrackerActivity() {
         // Required empty public constructor
@@ -122,11 +109,6 @@ public class TrainingTrackerActivity extends AppCompatActivity {
             }
         });
 
-        startLayout = (ConstraintLayout) findViewById(R.id.startLayout);
-        clInnerLayout = (ConstraintLayout) findViewById(R.id.clInnerLayout);
-        dateView = (TextView) findViewById(R.id.dateView);
-        textDistanceStep = findViewById(R.id.distanceStep);
-
         subscribeToObservers();
 
     }
@@ -152,11 +134,12 @@ public class TrainingTrackerActivity extends AppCompatActivity {
 
     private void saveWorkRecordToDb(){
         Date currdate = new Date();
+        String date = Integer.toString(currdate.getDate()) + "-" + Integer.toString(currdate.getMonth()+1) + "-" + Integer.toString(currdate.getYear()+1900);
         WorkoutRecord workoutRecord = null;
         if(cycling){
-            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, currdate.toString(), pathPoints);
+            workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, date, pathPoints);
         }else{
-            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString(), pathPoints);
+            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, date, pathPoints);
         }
         AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
 
@@ -189,12 +172,6 @@ public class TrainingTrackerActivity extends AppCompatActivity {
                 Log.d("CURRENT DISTANCE LOCATION", currentDistance + " m");
                 currentStep = (int) ((int) currentDistance/1609.34*2000);
                 Log.d("CURRENT STEP", currentStep + " step");
-                if(walkingRunning){
-                    textDistanceStep.setText(currentStep + " step");
-                }
-                if(cycling) {
-                    textDistanceStep.setText(currentDistance + " m");
-                }
             }
         });
     }

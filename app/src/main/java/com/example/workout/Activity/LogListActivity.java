@@ -50,7 +50,6 @@ public class LogListActivity extends AppCompatActivity {
         AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "workout-record").build();
 
-
         rView = findViewById(R.id.recyclerHistory);
         adapter = new HistoryAdapter(historyList);
         Log.d("Jumlah isi list", String.valueOf(historyList.size()));
@@ -80,7 +79,7 @@ public class LogListActivity extends AppCompatActivity {
     @SuppressLint("LongLogTag")
     private void fetch_history_workout(String tanggal) {
         historyList = new ArrayList<>();
-        historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().getAll();
+        historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().findByDate(tanggal);
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =

@@ -3,26 +3,18 @@ package com.example.workout.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.workout.Model.FetchURL;
-import com.example.workout.Model.TaskLoadedCallback;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
@@ -53,6 +45,7 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
         Gson gson = new Gson();
         selected_workout = gson.fromJson(getIntent().getStringExtra("selected_workout"), WorkoutRecord.class);
         pathPoints = selected_workout.getPathPoints();
+
         mapView = (MapView) findViewById(R.id.mapView);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
@@ -104,8 +97,8 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if(pathPoints != null) {
-            addAllPolylines();
             moveCameraToUser();
+            addAllPolylines();
         }
     }
 
