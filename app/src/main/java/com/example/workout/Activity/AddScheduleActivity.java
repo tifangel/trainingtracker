@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,7 +14,10 @@ import android.text.format.DateFormat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workout.Database.AppDatabase;
+import com.example.workout.Model.Schedule;
 import com.example.workout.R;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,26 +26,40 @@ import java.util.Locale;
 public class AddScheduleActivity extends AppCompatActivity {
     private DatePickerDialog datePickerDialog;
     private SimpleDateFormat dateFormatter;
-    private TextView DateResult;
-    private Button DatePicker;
+    private TextView dateResult;
+    private Button datePicker;
     private TextView startTimeText;
     private Button startTime;
     private TimePickerDialog startTimePickerDialog;
     private TextView finishTimeText;
     private Button finishTime;
     private TimePickerDialog finishTimePickerDialog;
+    private String jenis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_schedule);
 
+        MaterialButtonToggleGroup btnTypeTrack = (MaterialButtonToggleGroup) findViewById(R.id.toggleButton);
+        btnTypeTrack.addOnButtonCheckedListener(new MaterialButtonToggleGroup.OnButtonCheckedListener() {
+            @Override
+            public void onButtonChecked(MaterialButtonToggleGroup group, int checkedId, boolean isChecked) {
+                if(isChecked){
+                    if(checkedId == R.id.btnCycling){
+                        jenis = "Cycling";
+                    }else if(checkedId == R.id.btnWalkingRunning){
+                        jenis = "Walking/Running";
+                    }
+                }
+            }
+        });
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ROOT);
 
-        DateResult = (TextView) findViewById(R.id.dateresult);
-        DatePicker = (Button) findViewById(R.id.datepicker);
-        DatePicker.setOnClickListener(new View.OnClickListener() {
+        dateResult = (TextView) findViewById(R.id.dateresult);
+        datePicker = (Button) findViewById(R.id.datepicker);
+        datePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showDateDialog();
@@ -60,8 +78,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         finishTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddScheduleActivity.this, TrainingSchedulerActivity.class);
-                startActivity(intent);
+                showFinishTimeDialog();
             }
         });
 
@@ -69,9 +86,21 @@ public class AddScheduleActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFinishTimeDialog();
+                saveScheduleToDb();
+                Intent intent = new Intent(AddScheduleActivity.this, TrainingSchedulerActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    private void saveScheduleToDb(){
+        Schedule schedule = new Schedule(
+                jenis,
+                String.valueOf(dateResult.getText()),
+                String.valueOf(startTimeText.getText()),
+                String.valueOf(finishTimeText.getText())
+        );
+        AppDatabase.getDatabase(getApplicationContext()).getScheduleDao().insertSchedule(schedule);
     }
 
     private void showDateDialog(){
@@ -89,8 +118,8 @@ public class AddScheduleActivity extends AppCompatActivity {
                 Calendar newDate = Calendar.getInstance();
                 newDate.set(year, monthOfYear, dayOfMonth);
 
-
-                DateResult.setText(dateFormatter.format(newDate.getTime()));
+                Log.d("DATE SCHEDULE ", dateFormatter.format(newDate.getTime()));
+                dateResult.setText(dateFormatter.format(newDate.getTime()));
             }
 
         },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));

@@ -53,7 +53,6 @@ public class SchedulerAdapter extends RecyclerView.Adapter<SchedulerAdapter.Sche
             txtJenisWorkout = (TextView) itemView.findViewById(R.id.tv_desc_workout);
             txtWorkoutDesc = (TextView) itemView.findViewById(R.id.jarakTempuh);
             imgWorkout = (ImageView) itemView.findViewById(R.id.iv_workout);
-
         }
     }
 }

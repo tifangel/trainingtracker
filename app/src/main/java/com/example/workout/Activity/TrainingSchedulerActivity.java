@@ -1,6 +1,7 @@
 package com.example.workout.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.widget.Button;
 
 import com.example.workout.Adapter.HistoryAdapter;
 import com.example.workout.Adapter.SchedulerAdapter;
+import com.example.workout.Database.AppDatabase;
 import com.example.workout.Model.Schedule;
 import com.example.workout.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -26,7 +28,8 @@ public class TrainingSchedulerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_training_scheduler);
 
-        add_data();
+//        add_data();
+        fetch_training_scheduler();
 
         BottomNavigationView bottomNav = findViewById(R.id.navigationView);
         bottomNav.setSelectedItemId(R.id.training_scheduler);
@@ -44,9 +47,9 @@ public class TrainingSchedulerActivity extends AppCompatActivity {
 
         RecyclerView rView = findViewById(R.id.recyclerSchedule);
         SchedulerAdapter adapter = new SchedulerAdapter(scheduleList);
-
-
-
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(TrainingSchedulerActivity.this);
+        rView.setLayoutManager(layoutManager);
+        rView.setAdapter(adapter);
 
         navListener.onNavigationItemSelected(bottomNav.getMenu().findItem(R.id.training_scheduler));
     }
@@ -59,9 +62,13 @@ public class TrainingSchedulerActivity extends AppCompatActivity {
         scheduleList.add(new Schedule("Walking", "10/03/2000", "16.00", "20.00"));
     }
 
+    private void fetch_training_scheduler() {
+        scheduleList = new ArrayList<>();
+        scheduleList = AppDatabase.getDatabase(getApplicationContext()).getScheduleDao().getAllSchedule();
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
-
                 switch (item.getItemId()){
                     case R.id.sports_news:
                         Intent intent_sport_news = new Intent(TrainingSchedulerActivity.this, SportsNewsActivity.class);
@@ -80,11 +87,6 @@ public class TrainingSchedulerActivity extends AppCompatActivity {
                         startActivity(intent_training_history);
                         overridePendingTransition(0, 0);
                         return true;
-
-//                    case R.id.training_scheduler:
-//                        Intent intent_training_schedule = new Intent(TrainingSchedulerActivity.this, TrainingSchedulerActivity.class);
-//                        startActivity(intent_training_schedule);
-//                        return true;
                 }
                 return false;
             };

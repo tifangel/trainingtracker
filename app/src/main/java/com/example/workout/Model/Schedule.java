@@ -1,9 +1,24 @@
 package com.example.workout.Model;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName="schedule")
 public class Schedule {
+    @PrimaryKey(autoGenerate = true)
+    private int sid;
+
+    @ColumnInfo(name = "jenis")
     private String jenis;
+
+    @ColumnInfo(name = "tanggal")
     private String tanggal;
+
+    @ColumnInfo(name = "jamAwal")
     private String jamAwal;
+
+    @ColumnInfo(name = "jamAkhir")
     private String jamAkhir;
 
     public Schedule(String jenis, String tanggal, String jamAwal, String jamAkhir) {
@@ -11,6 +26,14 @@ public class Schedule {
         this.tanggal = tanggal;
         this.jamAwal = jamAwal;
         this.jamAkhir = jamAkhir;
+    }
+
+    public int getSid() {
+        return sid;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
     }
 
     public String getJenis() {
@@ -44,4 +67,6 @@ public class Schedule {
     public void setJamAkhir(String jamAkhir) {
         this.jamAkhir = jamAkhir;
     }
+
+
 }

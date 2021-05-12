@@ -8,13 +8,11 @@ import androidx.room.Room;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.workout.Adapter.HistoryAdapter;
 import com.example.workout.Database.AppDatabase;
-import com.example.workout.Model.News;
 import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
@@ -52,7 +50,6 @@ public class LogListActivity extends AppCompatActivity {
 
         rView = findViewById(R.id.recyclerHistory);
         adapter = new HistoryAdapter(historyList);
-        Log.d("Jumlah isi list", String.valueOf(historyList.size()));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(LogListActivity.this);
         rView.setLayoutManager(layoutManager);
         rView.setAdapter(adapter);
@@ -76,7 +73,6 @@ public class LogListActivity extends AppCompatActivity {
         );
     }
 
-    @SuppressLint("LongLogTag")
     private void fetch_history_workout(String tanggal) {
         historyList = new ArrayList<>();
         historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().findByDate(tanggal);
