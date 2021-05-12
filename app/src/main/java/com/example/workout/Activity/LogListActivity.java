@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import com.example.workout.Model.RecyclerItemClickListener;
 import com.example.workout.Model.WorkoutRecord;
 import com.example.workout.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,8 +61,12 @@ public class LogListActivity extends AppCompatActivity {
                 new RecyclerItemClickListener(LogListActivity.this, rView ,new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         WorkoutRecord selected_workout = historyList.get(position);
+
+                        Gson gson = new Gson();
+                        String workout = gson.toJson(selected_workout);
+
                         Intent i = new Intent(LogListActivity.this, LogDetailActivity.class);
-                        i.putExtra("selected_workout", selected_workout);
+                        i.putExtra("selected_workout", workout);
                         startActivity(i);
                     }
 
@@ -71,6 +77,7 @@ public class LogListActivity extends AppCompatActivity {
         );
     }
 
+    @SuppressLint("LongLogTag")
     private void fetch_history_workout(String tanggal) {
         historyList = new ArrayList<>();
         historyList = AppDatabase.getDatabase(getApplicationContext()).getDao().getAll();

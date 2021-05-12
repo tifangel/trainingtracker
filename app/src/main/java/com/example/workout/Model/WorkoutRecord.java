@@ -34,8 +34,8 @@ public class WorkoutRecord implements Parcelable {
     @ColumnInfo(name = "tanggal")
     private String tanggal;
 
-    @TypeConverters(PathPointsConverter.class)
-    @ColumnInfo(name = "polylines")
+    @TypeConverters({PathPointsConverter.class})
+    @ColumnInfo(name = "pathPoints")
     private ArrayList<ArrayList<LatLng>> pathPoints;
 
     public WorkoutRecord(String jenis, Double jarakTempuh, int jumlahStep, String tanggal, ArrayList<ArrayList<LatLng>> pathPoints) {

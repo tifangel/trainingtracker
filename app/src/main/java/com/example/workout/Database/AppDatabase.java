@@ -10,8 +10,8 @@ import androidx.room.TypeConverters;
 import com.example.workout.Model.PathPointsConverter;
 import com.example.workout.Model.WorkoutRecord;
 
-@TypeConverters(PathPointsConverter.class)
 @Database(entities = {WorkoutRecord.class}, version = 1)
+@TypeConverters({PathPointsConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     public abstract WorkoutRecordDao getDao();
     private static AppDatabase instance;

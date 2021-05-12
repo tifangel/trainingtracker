@@ -32,15 +32,13 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class TrainingTrackerActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class TrainingTrackerActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    private static final int POLYLINE_COLOR = Color.RED;
-    private static final float POLYLINE_WIDTH = 8f;
-    private static final float MAP_ZOOM = 15f;
 
     private boolean walkingRunning;
     private boolean cycling;
@@ -48,7 +46,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private Boolean isTracking = false;
     private ArrayList<ArrayList<LatLng>> pathPoints = new ArrayList<ArrayList<LatLng>>();
 
-    private GoogleMap mMap;
     private double currentDistance = 0;
     private int currentStep = 0;
 
@@ -73,11 +70,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                         overridePendingTransition(0, 0);
                         return true;
 
-//                    case R.id.training_tracker:
-//                        Intent intent_training_tracker = new Intent(TrainingTrackerActivity.this, TrainingTrackerActivity.class);
-//                        startActivity(intent_training_tracker);
-//                        return true;
-////
                     case R.id.training_history:
                         Intent intent_training_history = new Intent(TrainingTrackerActivity.this, TrainingHistoryActivity.class);
                         startActivity(intent_training_history);
@@ -135,11 +127,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         dateView = (TextView) findViewById(R.id.dateView);
         textDistanceStep = findViewById(R.id.distanceStep);
 
-        mapView = (MapView) findViewById(R.id.mapView);
-        mapView.onCreate(savedInstanceState);
-        mapView.onResume();
-        mapView.getMapAsync(this);
-
         subscribeToObservers();
 
     }
@@ -157,10 +144,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
     private void toggleRun(){
         if(isTracking){
             startService("ACTION_STOP_SERVICE");
-            startLayout.setVisibility(View.GONE);
-            clInnerLayout.setVisibility(View.VISIBLE);
-            mapView.setVisibility(View.VISIBLE);
-            dateView.setVisibility(View.VISIBLE);
             saveWorkRecordToDb();
         }else {
             startService("ACTION_START_SERVICE");
@@ -176,6 +159,13 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, currdate.toString(), pathPoints);
         }
         AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
+
+        Gson gson = new Gson();
+        String workout = gson.toJson(workoutRecord);
+
+        Intent i = new Intent(TrainingTrackerActivity.this, LogDetailActivity.class);
+        i.putExtra("selected_workout", workout);
+        startActivity(i);
     }
 
     private void subscribeToObservers(){
@@ -189,8 +179,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onChanged(ArrayList<ArrayList<LatLng>> arrayLists) {
                 pathPoints = arrayLists;
-                addLatestPolyline();
-                moveCameraToUser();
             }
         });
         TrackingService.currDistance.observe(this, new Observer<Double>() {
@@ -211,50 +199,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         });
     }
 
-    private void addAllPolylines(){
-        for(ArrayList<LatLng> polyline : pathPoints){
-            PolylineOptions polylineOptions = new PolylineOptions()
-                    .color(POLYLINE_COLOR)
-                    .width(POLYLINE_WIDTH)
-                    .addAll(polyline);
-            if(mMap != null){
-                mMap.addPolyline(polylineOptions);
-            }
-        }
-    }
-
-    @SuppressLint("LongLogTag")
-    private void addLatestPolyline(){
-        ArrayList<LatLng> lastPolylines = pathPoints.get(pathPoints.size()-1);
-        if(!pathPoints.isEmpty() && lastPolylines.size() > 1){
-            LatLng preLastLatLng = lastPolylines.get(lastPolylines.size() - 2);
-            LatLng lastLatLng = lastPolylines.get(lastPolylines.size()-1);
-            PolylineOptions polylineOptions = new PolylineOptions()
-                    .color(POLYLINE_COLOR)
-                    .width(POLYLINE_WIDTH)
-                    .add(preLastLatLng)
-                    .add(lastLatLng);
-            if(mMap != null){
-                mMap.addPolyline(polylineOptions);
-            }
-        }
-    }
-
-    private void moveCameraToUser(){
-        ArrayList<LatLng> lastPolylines = pathPoints.get(pathPoints.size()-1);
-        if(!pathPoints.isEmpty() && !lastPolylines.isEmpty()){
-            if(mMap != null){
-                LatLng lastLatLng = lastPolylines.get(lastPolylines.size()-1);
-               mMap.animateCamera(
-                        CameraUpdateFactory.newLatLngZoom(
-                                lastLatLng,
-                                MAP_ZOOM
-                        )
-                );
-            }
-        }
-    }
-
     private void updateTracking(Boolean isTracking){
         this.isTracking = isTracking;
         if(!isTracking){
@@ -262,12 +206,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
         }else {
             btnStartService.setText("Stop");
         }
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        addAllPolylines();
     }
 
     public boolean checkLocationPermission() {
@@ -312,62 +250,6 @@ public class TrainingTrackerActivity extends AppCompatActivity implements OnMapR
                 }
                 return;
             }
-        }
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        if(mapView != null){
-            mapView.onStart();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(mapView != null){
-            mapView.onResume();
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(mapView != null){
-            mapView.onSaveInstanceState(outState);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if(mapView != null){
-            mapView.onPause();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if(mapView != null){
-            mapView.onStop();
-        }
-    }
-
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-        if(mapView != null){
-            mapView.onLowMemory();
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if(mapView != null){
-            mapView.onDestroy();
         }
     }
 }

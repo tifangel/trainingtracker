@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
@@ -49,19 +50,13 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
         bottomNav.setSelectedItemId(R.id.training_history);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        selected_workout = getIntent().getParcelableExtra("selected_workout");
-//        if(selected_workout != null) {
-            Log.d("SET PATH POINTS ", "HORAYYYY");
-//            pathPoints = selected_workout.getPathPoints();
-            Log.d("PATH POINTS NOW", selected_workout.toString());
-            mapView = (MapView) findViewById(R.id.mapView);
-//            mapView.onCreate(savedInstanceState);
-//            mapView.onResume();
-            mapView.getMapAsync(this);
-//        }
-
-//        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.supportMapFragment);
-//        mapFragment.getMapAsync(this);
+        Gson gson = new Gson();
+        selected_workout = gson.fromJson(getIntent().getStringExtra("selected_workout"), WorkoutRecord.class);
+        pathPoints = selected_workout.getPathPoints();
+        mapView = (MapView) findViewById(R.id.mapView);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        mapView.getMapAsync(this);
 
         String txt_tanggal = selected_workout.getTanggal();
         tanggal = findViewById(R.id.tv_tanggalTerpilih);
@@ -78,22 +73,6 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
         }
     }
 
-//    private String getUrl(LatLng origin, LatLng dest, String directionMode) {
-//        // Origin of route
-//        String str_origin = "origin=" + origin.latitude + "," + origin.longitude;
-//        // Destination of route
-//        String str_dest = "destination=" + dest.latitude + "," + dest.longitude;
-//        // Mode
-//        String mode = "mode=" + directionMode;
-//        // Building the parameters to the web service
-//        String parameters = str_origin + "&" + str_dest + "&" + mode;
-//        // Output format
-//        String output = "json";
-//        // Building the url to the web service
-//        String url = "https://maps.googleapis.com/maps/api/directions/" + output + "?" + parameters + "&key=" + getString(R.string.google_maps_key);
-//        return url;
-//    }
-
     private void addAllPolylines(){
         for(ArrayList<LatLng> polyline : pathPoints){
             PolylineOptions polylineOptions = new PolylineOptions()
@@ -103,7 +82,6 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
             if(mMap != null){
                 mMap.addPolyline(polylineOptions);
             }
-            Log.d("POLYLINE ", polyline.toString());
         }
     }
 
@@ -125,18 +103,11 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-//        if(pathPoints != null) {
-//            addAllPolylines();
-//            moveCameraToUser();
-//        }
+        if(pathPoints != null) {
+            addAllPolylines();
+            moveCameraToUser();
+        }
     }
-
-//    @Override
-//    public void onTaskDone(Object... values) {
-//        if (currentPolyline != null)
-//            currentPolyline.remove();
-//        currentPolyline = mMap.addPolyline((PolylineOptions) values[0]);
-//    }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             item -> {
@@ -167,60 +138,60 @@ public class LogDetailActivity extends AppCompatActivity implements OnMapReadyCa
                 }
                 return false;
             };
-//
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        if(mapView != null){
-//            mapView.onStart();
-//        }
-//    }
-//
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if(mapView != null){
-//            mapView.onResume();
-//        }
-//    }
-//
-//    @Override
-//    public void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        if(mapView != null){
-//            mapView.onSaveInstanceState(outState);
-//        }
-//    }
-//
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        if(mapView != null){
-//            mapView.onPause();
-//        }
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if(mapView != null){
-//            mapView.onStop();
-//        }
-//    }
-//
-//    @Override
-//    public void onLowMemory() {
-//        super.onLowMemory();
-//        if(mapView != null){
-//            mapView.onLowMemory();
-//        }
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        if(mapView != null){
-//            mapView.onDestroy();
-//        }
-//    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if(mapView != null){
+            mapView.onStart();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(mapView != null){
+            mapView.onResume();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(mapView != null){
+            mapView.onSaveInstanceState(outState);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if(mapView != null){
+            mapView.onPause();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if(mapView != null){
+            mapView.onStop();
+        }
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        if(mapView != null){
+            mapView.onLowMemory();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(mapView != null){
+            mapView.onDestroy();
+        }
+    }
 }
