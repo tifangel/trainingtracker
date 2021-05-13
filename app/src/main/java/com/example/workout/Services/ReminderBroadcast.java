@@ -16,9 +16,9 @@ public class ReminderBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        MediaPlayer mediaPlayer = MediaPlayer.create(context,
-                Settings.System.DEFAULT_RINGTONE_URI);
-        mediaPlayer.start();
+//        MediaPlayer mediaPlayer = MediaPlayer.create(context,
+//                Settings.System.DEFAULT_RINGTONE_URI);
+//        mediaPlayer.start();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notifySchedule")
                 .setSmallIcon(R.drawable.ic_schedule)

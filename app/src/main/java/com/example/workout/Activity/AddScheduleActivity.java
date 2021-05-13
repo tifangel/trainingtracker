@@ -97,7 +97,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 saveScheduleToDb();
-                showNotification(scheduleCalender.getTimeInMillis());
+                setNotification(scheduleCalender.getTimeInMillis());
                 Intent intent = new Intent(AddScheduleActivity.this, TrainingSchedulerActivity.class);
                 startActivity(intent);
             }
@@ -142,7 +142,7 @@ public class AddScheduleActivity extends AppCompatActivity {
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
                 scheduleCalender.set(
-                        scheduleCalender.getTime().getYear(),
+                        scheduleCalender.getTime().getYear()+1900,
                         scheduleCalender.getTime().getMonth(),
                         scheduleCalender.getTime().getDate(),
                         hourOfDay,
@@ -186,7 +186,7 @@ public class AddScheduleActivity extends AppCompatActivity {
         }
     }
 
-    private void showNotification(long timeInMillis){
+    private void setNotification(long timeInMillis){
         Intent intent = new Intent(AddScheduleActivity.this, ReminderBroadcast.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(AddScheduleActivity.this, 0, intent, 0);
 
