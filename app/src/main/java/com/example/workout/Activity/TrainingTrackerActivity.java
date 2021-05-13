@@ -139,7 +139,7 @@ public class TrainingTrackerActivity extends AppCompatActivity {
         if(cycling){
             workoutRecord = new WorkoutRecord("Cycling", currentDistance, -1, date, pathPoints);
         }else{
-            workoutRecord = new WorkoutRecord("Walking", (double) -1, currentStep, date, pathPoints);
+            workoutRecord = new WorkoutRecord("Walking/Running", (double) -1, currentStep, date, pathPoints);
         }
         AppDatabase.getDatabase(getApplicationContext()).getDao().insertAllData(workoutRecord);
 

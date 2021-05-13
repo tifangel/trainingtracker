@@ -34,7 +34,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         WorkoutRecord workout = workoutRecordList.get(position);
         String jenis = workout.getJenis();
         Log.d("Jenis", jenis);
-        String desc = "Tanggal: " + workout.getTanggal() + "\n Jarak Tempuh: "+ workout.getJarakTempuh()+ "km";
+        String desc = "";
+        if(workout.getJumlahStep() == -1){
+            desc = "Tanggal: " + workout.getTanggal() + "\n Jarak Tempuh: "+ workout.getJarakTempuh()+ " km";
+        }else {
+            desc = "Tanggal: " + workout.getTanggal() + "\n Jumlah Step: "+ workout.getJumlahStep()+ " step";
+        }
         Log.d("Desc" , desc);
         holder.txtJenisWorkout.setText(jenis);
         holder.txtWorkoutDesc.setText(desc);
