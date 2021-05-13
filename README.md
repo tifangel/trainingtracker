@@ -42,6 +42,7 @@ Aplikasi ini dibuat untuk memenuhi keperluan tugas besar IF3210 Pengembangan Apl
 ### Tracking Tracker
 ![](image/3.png)
 ![](image/4.png)
+![](image/9.png)
 
 ### Training History
 ![](image/5.png)
@@ -50,6 +51,7 @@ Aplikasi ini dibuat untuk memenuhi keperluan tugas besar IF3210 Pengembangan Apl
 ### Training Scheduler
 ![](image/7.png)
 ![](image/8.png)
+![](image/10.png)
 
 ## Pembagian Kerja
 
