@@ -38,7 +38,7 @@ public class SportsNewsActivity extends AppCompatActivity {
     private List<News> newsList;
     private final String cID = "id";
     private final String cat = "sports";
-    private final String TOKEN = "571be0fed4944a4090d63fd0c45da227";
+    private final String TOKEN = "Your_API_KEY";
     private SportsNewsAdapter adapter;
 
     @Override
